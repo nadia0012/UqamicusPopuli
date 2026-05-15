@@ -1,0 +1,69 @@
+/* ============================================================
+    BASE.CSS — Variables globales, reset, utilitaires
+    Uqamicus Populi — Ne pas modifier sauf pour les tokens globaux
+   ============================================================ */
+
+/* ============================================================
+    VARIABLES GLOBALES (partagées par toutes les pages)
+   ============================================================ */
+:root {
+    /* --- Palette Uqamicus Populi --- */
+    --bleu-original:         #00508F;
+    --bleu-pale:             #ECF6FF;
+    --bleu-moyen:            #5E85BB;
+    --bleu-fonce:            #021233;
+    --fond-jaune:            #FFFEFA;
+    --jaune-pale1:           #FFFAF0;
+    --jaune-pale2:           #F7EECD;
+
+    /* --- Dégradés Uqamicus Populi --- */
+    --grad-bleu:          linear-gradient(180deg, var(--Bleu-Original, #00508F) 0%, var(--Bleu-Fonce, #021233) 100%);
+
+    /* --- Couleur accent --- */
+    --jaune:                 #FFDD62;
+
+    /* --- Tokens d'interface --- */
+    --transition-fast:   0.2s ease;
+    --transition-base:   0.3s ease;
+
+    /* --- Rayons --- */
+    --radius-box:    20px;
+    --radius-btn:     8px;
+    --radius-header: 40px;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: var(--fond-jaune);
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================================
+    UTILITAIRES GLOBAUX
+   ============================================================ */
+.visually-hidden {
+    display: none;
+}
+
+/* Animation au scroll (IntersectionObserver JS) */
+.scroll-anim {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.scroll-anim.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Texte dégradé Uqamicus Populi — classe utilitaire */
+.text-grad {
+    background: var(--grad-bleu);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
