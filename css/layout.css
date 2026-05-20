@@ -11,6 +11,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 90px;
+    align-items: flex-start;
 }
 
 #navbar {
@@ -25,7 +27,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    overflow: hidden;
+    overflow: visible;
     transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -169,7 +171,6 @@ header {
    ============================================================ */
 footer {
     height: 270px;
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;

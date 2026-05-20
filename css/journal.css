@@ -8,3 +8,87 @@
     /* ============================================================
     INTRODUCTION PAGE D'ACCUEIL — (index.html)
    ============================================================ */
+.main-accueil {
+    margin: 60px auto;
+    padding: 0 8vw;
+    max-width: 1400px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-image {
+    transform: rotate(5.02deg);
+    aspect-ratio: 99/127;
+}
+
+.main-right {
+    margin-left: auto;
+}
+
+.main-left {
+    max-width: 600px;
+}
+
+.main-left h1 {
+    font-family: "Playfair Display";
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    background: var(--grad-bleu);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.highlight {
+    display: inline;
+    -webkit-text-fill-color: initial;
+    color: var(--bleu-original);
+    background: var(--jaune);
+    padding: 0 6px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.main-left h2 {
+    color: #191919;
+    font-family: Lato;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.contact-button{
+    background-color: var(--jaune-pale2);
+    color: var(--bleu-original);
+}
+
+.articles-button {
+    background: var(--grad-bleu);
+    color: var(--fond-jaune);
+}
+
+.articles-button, .contact-button{
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+    text-decoration: none;
+    border-radius: var(--radius-btn);
+    line-height: normal;
+    font-weight: 600;
+    font-size: 20px;
+    font-family: Lato, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border: var(--bleu-original) 2px solid;
+}
+
+.main-buttons{
+    display: flex;
+    gap: 20px;
+    margin-top: 40px;
+}
