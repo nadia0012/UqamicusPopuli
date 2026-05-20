@@ -17,7 +17,7 @@
     --jaune-pale2:           #F7EECD;
 
     /* --- Dégradés Uqamicus Populi --- */
-    --grad-bleu:          linear-gradient(180deg, var(--Bleu-Original, #00508F) 0%, var(--Bleu-Fonce, #021233) 100%);
+    --grad-bleu:          linear-gradient(180deg, var(--Bleu-Original, #00508F) 0%, #00345C 100%);
 
     /* --- Couleur accent --- */
     --jaune:                 #FFDD62;

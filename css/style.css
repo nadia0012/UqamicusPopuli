@@ -10,8 +10,10 @@
     1. base       → variables, reset, utilitaires globaux
     2. layout     → header, footer, sidebar
     3. components → boutons, cartes, formulaires, etc.
+    4. journal    → styles spécifiques à la page d'accueil et de contact
    ============================================================ */
 
 @import url('base.css');
 @import url('layout.css');
 @import url('components.css');
+@import url('journal.css');
