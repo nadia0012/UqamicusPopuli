@@ -1,13 +1,13 @@
 /* ============================================================
-    club.css — Pages Index & Contact
-    L'Uqamicus Populi
-    Contient les styles propres à la page d'accueil (index.html)
-    et à la page contact (contact.html)
-   ============================================================ */
+club.css — Pages Index & Contact
+L'Uqamicus Populi
+Contient les styles propres à la page d'accueil (index.html)
+et à la page contact (contact.html)
+============================================================ */
 
-    /* ============================================================
-    INTRODUCTION PAGE D'ACCUEIL — (index.html)
-   ============================================================ */
+/* ============================================================
+INTRODUCTION PAGE D'ACCUEIL — (index.html)
+============================================================ */
 .main-accueil {
     margin: 60px auto;
     padding: 0 8vw;
@@ -53,16 +53,6 @@
     -webkit-text-fill-color: transparent;
 }
 
-.highlight {
-    display: inline;
-    -webkit-text-fill-color: initial;
-    color: var(--bleu-original);
-    background: var(--jaune);
-    padding: 0 6px;
-    -webkit-box-decoration-break: clone;
-    box-decoration-break: clone;
-}
-
 .main-left h2 {
     color: #191919;
     font-family: Lato;
@@ -73,7 +63,7 @@
 }
 
 .contact-button{
-    background-color: var(--jaune-pale2);
+    background-color: var(--jaune-pale1);
     color: var(--bleu-original);
 }
 
@@ -83,7 +73,7 @@
 }
 
 .articles-button, .contact-button{
-    transition: background-color var(--transition-fast), color var(--transition-fast);
+    transition: background-color var(--transition-fast), opacity var(--transition-fast);
     text-decoration: none;
     border-radius: var(--radius-btn);
     line-height: normal;
@@ -97,8 +87,196 @@
     border: var(--bleu-original) 2px solid;
 }
 
+.articles-button:hover {
+    opacity: 0.9;
+}
+
+.contact-button:hover {
+    background-color: var(--jaune-pale2);
+}
+
 .main-buttons{
     display: flex;
     gap: 20px;
     margin-top: 40px;
+}
+
+/* ============================================================
+ARTICLES RÉCENTS — section "Articles récents" de index.html
+============================================================ */
+/* --- Conteneur Principal --- */
+.menu-section {
+max-width: 1400px;
+margin: 60px auto;
+padding: 0 8vw;
+display: flex;
+flex-direction: column;
+gap: 40px;
+}
+
+.menu-section h1 {
+margin: 0;
+text-align: center;
+font-family: "Playfair Display", serif;
+font-size: 50px;
+font-weight: 900;
+line-height: normal;
+background: var(--grad-bleu);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+/* --- Grille et Structure des colonnes --- */
+.menu-articles-grid {
+display: flex;
+gap: 24px;
+align-items: stretch;
+}
+
+.article-cards-side {
+display: flex;
+flex-direction: column;
+gap: 20px;
+flex: 1;
+}
+
+/* --- Base des Cartes (Communs) --- */
+.article-card,
+.article-card-small {
+display: flex;
+border: 2px solid var(--bleu-original);
+border-radius: 15px;
+overflow: hidden;
+transition: transform var(--transition-fast);
+}
+
+.article-card {
+width: 720px;
+height: 320px;
+background-color: #eaf3fb;
+}
+
+.article-card-small {
+flex: 1;
+background-color: var(--jaune-pale1);
+}
+
+/* Lien englobant pour pouvoir cliquer sur toute la carte */
+.article-link {
+display: flex;
+width: 100%;
+height: 100%;
+text-decoration: none;
+}
+
+/* --- Images --- */
+.article-card-img,
+.article-card-small-img {
+object-fit: cover;
+border-radius: 10px;
+border: 2px solid var(--bleu-original);
+flex-shrink: 0;
+}
+
+.article-card-img {
+width: 370px;
+margin: 10px;
+}
+
+.article-card-small-img {
+width: 160px;
+margin: 8px;
+}
+
+/* --- Contenu Texte --- */
+.article-card-content {
+display: flex;
+flex-direction: column;
+padding: 10px;
+flex: 1;
+}
+
+.article-card-title {
+margin: 0;
+font-family: 'Playfair Display', serif;
+font-size: 30px;
+font-weight: 900;
+line-height: 1.3;
+background: var(--grad-bleu);
+background-clip: text;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+}
+
+.article-card-title--small {
+font-size: 20px;
+}
+
+/* --- Méta-données (Auteur, Date, Bouton) --- */
+.article-card-info {
+display: flex;
+flex-direction: column;
+gap: 10px;
+margin-top: auto;
+}
+
+/* Layout spécifique pour les petites cartes */
+.article-card-small .article-card-info {
+flex-direction: row;
+align-items: center;
+justify-content: space-between;
+}
+
+.article-card-author-row {
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.article-card-date,
+.article-card-author {
+display: flex;
+align-items: center;
+gap: 10px;
+font-family: Lato, sans-serif;
+font-weight: 500;
+font-size: 15px;
+color: var(--bleu-original);
+}
+
+/* --- Bouton d'action (SVG) --- */
+.article-card-btn {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 42px;
+height: 42px;
+border-radius: 50%;
+border: 1.5px solid var(--bleu-original);
+background-color: var(--jaune-pale1);
+transition: background-color var(--transition-fast);
+}
+
+.article-card-small .article-card-btn {
+background-color: var(--bleu-pale);
+}
+
+.article-card-btn svg {
+transition: transform var(--transition-fast);
+}
+
+/* --- États Hover --- */
+.article-card:hover .article-card-btn {
+background-color: var(--jaune-pale2);
+}
+
+.article-card-small:hover .article-card-btn {
+background-color: var(--bleu-pale2);
+}
+
+/* Animation commune au survol de n'importe quelle carte */
+.article-card:hover .article-card-btn svg,
+.article-card-small:hover .article-card-btn svg {
+transform: translateX(2px);
 }

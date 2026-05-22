@@ -1,11 +1,11 @@
 /* ============================================================
-    LAYOUT.CSS — Header, Navbar, Sidebar, Footer
-    Uqamicus Populi — Commun à toutes les pages
-   ============================================================ */
+LAYOUT.CSS — Header, Navbar, Sidebar, Footer
+Uqamicus Populi — Commun à toutes les pages
+============================================================ */
 
 /* ============================================================
-    HEADER / NAVBAR
-   ============================================================ */
+HEADER / NAVBAR
+============================================================ */
 header {
     padding: 20px;
     display: flex;
@@ -198,11 +198,6 @@ footer {
 .footer-logo img{
     width: 110px;
     height: 110px;
-    transition: transform var(--transition-fast);
-}
-
-.footer-logo a:hover img {
-    transform: scale(0.95);
 }
 
 .footer-titles{
@@ -253,15 +248,10 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform var(--transition-fast);
 }
 
 .social-medias a:hover svg path {
     fill: var(--jaune-pale2);
-}
-
-.social-medias a:hover {
-    transform: scale(1.05);
 }
 
 /* ============================================================

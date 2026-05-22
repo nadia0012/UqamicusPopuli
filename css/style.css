@@ -1,17 +1,17 @@
 /* ============================================================
-    STYLE.CSS — Point d'entrée unique
-    Uqamicus Populi
-    
-    Ce fichier importe tous les modules CSS dans le bon ordre.
-    C'est le seul fichier à lier dans les HTML :
-    <link rel="stylesheet" href="css/style.css">
-    
-    ORDRE D'IMPORT (ne pas modifier) :
-    1. base       → variables, reset, utilitaires globaux
-    2. layout     → header, footer, sidebar
-    3. components → boutons, cartes, formulaires, etc.
-    4. journal    → styles spécifiques à la page d'accueil et de contact
-   ============================================================ */
+STYLE.CSS — Point d'entrée unique
+Uqamicus Populi
+
+Ce fichier importe tous les modules CSS dans le bon ordre.
+C'est le seul fichier à lier dans les HTML :
+<link rel="stylesheet" href="css/style.css">
+
+ORDRE D'IMPORT (ne pas modifier) :
+1. base       → variables, reset, utilitaires globaux
+2. layout     → header, footer, sidebar
+3. components → boutons, cartes, formulaires, etc.
+4. journal    → styles spécifiques à la page d'accueil et de contact
+============================================================ */
 
 @import url('base.css');
 @import url('layout.css');

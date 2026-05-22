@@ -1,15 +1,16 @@
 /* ============================================================
-    BASE.CSS — Variables globales, reset, utilitaires
-    Uqamicus Populi — Ne pas modifier sauf pour les tokens globaux
-   ============================================================ */
+BASE.CSS — Variables globales, reset, utilitaires
+Uqamicus Populi — Ne pas modifier sauf pour les tokens globaux
+============================================================ */
 
 /* ============================================================
-    VARIABLES GLOBALES (partagées par toutes les pages)
-   ============================================================ */
+VARIABLES GLOBALES (partagées par toutes les pages)
+============================================================ */
 :root {
     /* --- Palette Uqamicus Populi --- */
     --bleu-original:         #00508F;
     --bleu-pale:             #ECF6FF;
+    --bleu-pale2:            #C1DCFF;
     --bleu-moyen:            #5E85BB;
     --bleu-fonce:            #021233;
     --fond-jaune:            #FFFEFA;
