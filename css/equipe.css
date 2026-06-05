@@ -4,89 +4,50 @@ L'Uqamicus Populi
 Contient les styles propres à la page Équipe (equipe.html)
 ============================================================ */
 
-.team-title {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
+.team-title { display: flex; flex-direction: column; gap: 20px; }
 
-.blue-team{
-    max-width: 710px;
-}
-
-.yellow-team{
-    max-width: 420px;
-}
-
-.blue-team, .yellow-team{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
+.blue-team, .yellow-team {
+    display: flex; flex-direction: row;
+    gap: 20px; padding: 15px; width: 100%;
     border: var(--bleu-original) 2px solid;
     border-radius: var(--radius-box);
-    padding: 15px;
-    width: 100%;
 }
+
+.blue-team { max-width: 600px; }
 
 .blue-team img {
-    height: auto;
-    width: 285px;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    object-position: top;
+    width: 285px; height: auto; aspect-ratio: 1/1;
+    object-fit: cover; object-position: top;
     border: var(--bleu-original) 2px solid;
     border-radius: var(--radius-box);
 }
 
-.text-team{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
+.text-team { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; }
+.text-team h1 { font-size: 30px; color: var(--bleu-fonce); font-family: "Playfair Display"; }
+.text-team h2 { font-size: 20px; color: var(--bleu-original); font-weight: 900; font-family: "Playfair Display"; }
+.text-team p  { font-size: 18px; color: var(--bleu-fonce); font-family: Lato, sans-serif; margin: 0; }
+
+.comite-executif { display: flex; flex-direction: column; align-items: start; }
+
+.team-row    { display: flex; gap: 20px; align-items: stretch; grid-column: 1 / -1; justify-content: center; }
+.team-column { display: grid; gap: 20px; width: 100%; }
+.team-column--2 { grid-template-columns: repeat(2, 1fr); }
+.team-column--3 { grid-template-columns: repeat(3, 1fr); }
+
+.section-title h1 { font-size: 60px; }
+
+@media (max-width: 1200px) {
+    .blue-team { flex-direction: column; }
+    .blue-team img { width: 100%; }
+    .vector-art{ width: 300px; height: auto; }
 }
 
-.text-team h1 {
-    font-size: 30px;
-    color: var(--bleu-fonce);
-    font-family: "Playfair Display";
+@media (max-width: 1024px) {
+    .blue-team { max-width: fit-content; }
+    .team-row { flex-wrap: wrap; }
+    .team-column--3 .team-row > * { flex: 1 1 calc(50% - 10px); min-width: 250px; }
 }
 
-.text-team h2 {
-    font-size: 20px;
-    color: var(--bleu-original);
-    font-weight: 900;
-    font-family: "Playfair Display";
-}
-
-.text-team p {
-    font-size: 18px;
-    color: var(--bleu-fonce);
-    font-family: Lato, sans-serif;
-    align-self: stretch;
-    margin: 0px;
-}
-
-.comite-executif{
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-}
-
-.team-row{
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: stretch;
-}
-
-.team-column{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.section-title h1{
-    font-size: 60px;
-    background-color: red;
+@media (max-width: 600px) {
+    .team-row > * { flex: 1 1 100%; }
 }
