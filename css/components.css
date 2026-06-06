@@ -1,9 +1,15 @@
 /* ============================================================
 equipe.css — Page Équipe
+articles.css — Page des articles
+podcast.css — Page du podcast
+contact.css — Page de contact
 L'Uqamicus Populi
-Contient les styles propres à la page Équipe (equipe.html)
+Contient les styles propres à la page Équipe, Articles, Podcast et Contact (equipe.html)
 ============================================================ */
 
+/* ============================================================
+    Page d'équipe
+   ============================================================ */
 .team-title { display: flex; flex-direction: column; gap: 20px; }
 
 .blue-team, .yellow-team {
@@ -37,6 +43,36 @@ Contient les styles propres à la page Équipe (equipe.html)
 
 .section-title h1 { font-size: 60px; }
 
+/* ============================================================
+    Page des articles
+   ============================================================ */
+.article-title{ align-items: center; margin-bottom: 50px; }
+.articles{ margin-top: 0px; }
+.articles-grid{ display: grid; grid-template-columns: repeat(2, 1fr); }
+
+.pagination-container{ 
+    display: flex; 
+    justify-content: center;
+    margin-top: 20px; 
+    margin-bottom: 100px; 
+    padding: 20px; 
+    border: var(--bleu-original) 2px solid; 
+    border-radius: var(--radius-box); 
+    width: fit-content; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+.pagination{ display: flex; gap: 20px; list-style: none; padding: 0; margin: 0; justify-content: center; }
+.pagination-link{ 
+    text-decoration: none; 
+    justify-content: center; 
+    align-items: center; 
+    display: flex;
+}
+
+/* ============================================================
+    RESPONSIVE
+   ============================================================ */
 @media (max-width: 1200px) {
     .blue-team { flex-direction: column; }
     .blue-team img { width: 100%; }
@@ -51,4 +87,8 @@ Contient les styles propres à la page Équipe (equipe.html)
 
 @media (max-width: 600px) {
     .team-row > * { flex: 1 1 100%; }
+}
+
+@media (max-width: 480px){
+    .articles-grid{ display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; }
 }

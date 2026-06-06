@@ -15,6 +15,5 @@ ORDRE D'IMPORT (ne pas modifier) :
 
 @import url('base.css');
 @import url('layout.css');
-@import url('components.css');
 @import url('journal.css');
-@import url('equipe.css');
+@import url('components.css');
