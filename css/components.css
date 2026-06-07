@@ -67,6 +67,12 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .pagination-link{ text-decoration: none; justify-content: center; align-items: center; display: flex; }
 .pagination-active{ background-color: var(--bleu-original); color: var(--fond-jaune); padding: 8px 12px; border-radius: 100%; font-weight: 700; }
 
+.vector-background-top{
+    position: absolute; top: 0; left: 0; width: 100%; height: auto; z-index: -1;
+}
+
+.vector-background-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: auto; z-index: -1; margin-bottom: -1000px; }
+
 /* ============================================================
     RESPONSIVE
    ============================================================ */
