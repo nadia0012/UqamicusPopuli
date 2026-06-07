@@ -51,24 +51,21 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .articles-grid{ display: grid; grid-template-columns: repeat(2, 1fr); }
 
 .pagination-container{ 
-    display: flex; 
-    justify-content: center;
-    margin-top: 20px; 
-    margin-bottom: 100px; 
-    padding: 20px; 
-    border: var(--bleu-original) 2px solid; 
-    border-radius: var(--radius-box); 
-    width: fit-content; 
-    margin-left: auto; 
-    margin-right: auto;
+    display: flex; justify-content: center; margin-top: 20px; 
+    margin-bottom: 100px; padding: 10px 20px; border: var(--bleu-original) 2px solid; 
+    border-radius: var(--radius-box); width: fit-content; margin-left: auto; margin-right: auto;
 }
-.pagination{ display: flex; gap: 20px; list-style: none; padding: 0; margin: 0; justify-content: center; }
-.pagination-link{ 
-    text-decoration: none; 
-    justify-content: center; 
-    align-items: center; 
+.pagination {
     display: flex;
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
 }
+.pagination-link{ text-decoration: none; justify-content: center; align-items: center; display: flex; }
+.pagination-active{ background-color: var(--bleu-original); color: var(--fond-jaune); padding: 8px 12px; border-radius: 100%; font-weight: 700; }
 
 /* ============================================================
     RESPONSIVE
