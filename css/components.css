@@ -73,6 +73,60 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 
 .vector-background-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: auto; z-index: -1; margin-bottom: -1000px; }
 
+
+/* ============================================================
+    Page du Balado
+   ============================================================ */
+.plateformes{
+    background-color: var(--jaune-pale1);
+    display: flex;
+    flex-direction: column;
+    padding: 40px 30px;
+    margin-top: 20px;
+}
+
+.plateformes h1{
+    color: var(--bleu-original);
+    font-size: 40px;
+}
+
+.plateformes-apps{
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.micro img {
+    width: 520px;
+    height: 100%;
+    object-fit: scale-down;
+}
+
+.micro{
+    background: var(--grad-bleu);
+}
+
+.micro, .plateformes, .citation {
+    border-radius: var(--radius-box);
+    border: var(--bleu-original) 2px solid;
+}
+
+.citation {
+    display: flex; flex-direction: column;
+    gap: 20px; flex: 1;
+    background-color: var(--jaune-pale1);
+    padding: 40px 70px;
+}
+
+.citation p{ color: var(--bleu-fonce); font-size: 25px; }
+
+.deco-balado {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 20px;
+}
+
 /* ============================================================
     RESPONSIVE
    ============================================================ */
@@ -80,6 +134,8 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     .blue-team { flex-direction: column; }
     .blue-team img { width: 100%; }
     .vector-art{ width: 300px; height: auto; }
+    .micro img { width: 400px; }
+    .citation  { padding: 30px 50px; }
 }
 
 @media (max-width: 1024px) {
@@ -88,10 +144,23 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     .team-column--3 .team-row > * { flex: 1 1 calc(50% - 10px); min-width: 250px; }
 }
 
+@media (max-width: 768px){
+    .deco-balado   { flex-direction: column; align-items: center; }
+    .micro img     { width: 100%; height: 450px; }
+    .micro         { height: 100%; width: 100%; }
+    .citation      { padding: 30px 40px; height: 450px;}
+}
+
 @media (max-width: 600px) {
     .team-row > * { flex: 1 1 100%; }
+    .micro img    { height: 260px; }
+    .citation     { padding: 25px 30px; }
+    .citation p   { font-size: 20px; }
 }
 
 @media (max-width: 480px){
     .articles-grid{ display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; }
+    .micro img    { height: 200px; }
+    .citation     { padding: 20px; }
+    .citation p   { font-size: 18px; }
 }
