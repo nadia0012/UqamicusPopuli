@@ -51,7 +51,10 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .pagination-active { background-color: var(--bleu-original); color: var(--fond-jaune); padding: 8px 12px; border-radius: 100%; font-weight: 700; }
 
 .vector-background-top    { position: absolute; top: 0; left: 0; width: 100%; height: auto; z-index: -1; }
+.vector-section { position: relative; height: 0; overflow: visible; }
 .vector-background-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: auto; z-index: -1; }
+
+
 
 /* ── Balado ──────────────────────────────────────────────── */
 .micro, .plateformes, .citation, .podcast-container, .podcast-card-img {
