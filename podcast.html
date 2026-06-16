@@ -99,18 +99,22 @@
     <main>
         <section class="menu-section menu-left">
             <img src="Images/Background/BackgroundGradient.svg" alt="Arrière-plan de l'accueil du journal L'Uqamicus Populi" class="main-background">
-            <div class="section-title">
-                <h1>Le Balado Populi</h1>
-                <h2>Le droit par ceux qui l'apprennent, pour ceux qui veulent comprendre. <br>
-                    Le Balado Populi donne voix aux idées, aux débats et aux enjeux qui façonnent notre société.</h2>
+            <div class="titre-balado">
+                <div class="section-title">
+                    <h1>Le Balado Populi</h1>
+                    <h2>Le droit par ceux qui l'apprennent, pour ceux qui veulent comprendre. <br>
+                        Le Balado Populi donne voix aux idées, aux débats et aux enjeux qui façonnent notre société.</h2>
+                </div>
                     <div class="plateformes">
                         <h1>Écoutez-nous sur vos plateformes préférées</h1>
                         <div class="plateformes-apps">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none">
+                            <!-- Spotify -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none" class="spotify">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M34 68C15.2223 68 0 52.7777 0 34C0 15.2223 15.2223 0 34 0C52.7777 0 68 15.2223 68 34C68 52.7777 52.7777 68 34 68ZM36.4716 17.5615C29.71 16.9352 22.5227 17.8928 16.1529 20.7169C14.627 21.3933 13.9383 23.1788 14.6149 24.7046C15.2914 26.2305 17.0768 26.9191 18.6027 26.2426C23.9247 23.883 30.0611 23.0379 35.914 23.5801C41.804 24.1258 47.4844 26.0842 51.8018 29.4052C53.1248 30.4227 55.0223 30.1752 56.04 28.8522C57.0576 27.5293 56.8101 25.6318 55.4871 24.614C50.0883 20.4614 43.256 18.1898 36.4716 17.5615ZM18.0824 32.6373C23.3347 30.1503 29.3063 29.3047 34.9029 29.8325C40.3763 30.3487 45.911 32.2219 50.2874 35.6705C51.5984 36.7037 51.8237 38.6039 50.7906 39.9149C49.7574 41.2258 47.8572 41.4511 46.5462 40.4181C43.2563 37.8255 38.8912 36.28 34.3353 35.8502C29.6906 35.4121 24.8271 36.1314 20.6693 38.1003C19.1607 38.8146 17.3587 38.1708 16.6444 36.6623C15.9301 35.1537 16.5739 33.3517 18.0824 32.6373ZM33.3389 42.1718C29.2077 41.77 24.7987 42.3865 20.8781 44.2263C19.3672 44.9353 18.7169 46.735 19.4259 48.246C20.1351 49.7571 21.9348 50.4072 23.4458 49.6982C26.2815 48.3675 29.5854 47.8797 32.7536 48.1878C35.9477 48.4985 38.9749 49.6152 41.2317 51.453C42.5261 52.5069 44.4297 52.3121 45.4835 51.0178C46.5375 49.7234 46.3426 47.8199 45.0483 46.7659C41.7036 44.0424 37.4863 42.5751 33.3389 42.1718Z" fill="#00345C"/>
                             </svg>
 
-                            <a href="https://www.choq.ca/balados/balado-populi" target="_blank">
+                            <!-- CHOQ.ca -->
+                            <a href="https://www.choq.ca/balados/balado-populi" target="_blank" class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="355" height="68" viewBox="0 0 355 68" fill="none">
                                     <path d="M33.6465 0C44.3955 6.55918e-05 53.9673 5.04028 60.127 12.8867C60.2324 13.2211 60.1239 13.566 60.082 13.7334C57.1637 16.7089 51.2246 22.7628 50.8125 23.1748C50.479 23.5083 50.0489 23.3375 49.7754 23.1396C46.3734 17.8904 40.4973 14.4209 33.8174 14.4209C23.2939 14.421 14.7627 23.0292 14.7627 33.6475C14.7627 44.2658 23.2939 52.8739 33.8174 52.874C40.6212 52.874 46.5909 49.2747 49.9619 43.8613C50.2128 43.7915 50.4906 43.8703 50.6406 43.9453C53.6733 46.8064 59.8074 52.6665 60.082 53.2158C60.2922 53.6362 60.2802 54.016 60.1865 54.3252C54.0292 62.2163 44.4312 67.2919 33.6465 67.292C15.0643 67.292 0 52.2277 0 33.6455C9.77606e-05 15.0634 15.0644 0 33.6465 0Z" fill="#00345C"/>
                                     <path d="M84.4579 26.4377H109.864V1.3752H124.628V65.9211H109.864V39.8283H84.4579V65.9211H69.6952V1.3752H84.4579V26.4377Z" fill="#00345C"/>
@@ -197,10 +201,11 @@
                     <h1>Découvrez nos épisodes</h1>
                     <h2>Des conversations avec des étudiants, des professeurs, des juristes et des professionnels engagés.</h2>
                 </div>
+                <!-- Épisode 1 -->
                 <div class="podcast-container">
                     <div class="image-and-infos">
                         <div class="episode-img-wrapper">
-                            <img src="Images/Podcast/Episode1.png" alt="Une statue aveugle tenant une balance">
+                            <img src="Images/Podcast/PodcastEp1.png" alt="Une statue aveugle tenant une balance" class="podcast-card-img">
                             <span class="episode-badge">EP 1</span>
                         </div>
 
@@ -316,6 +321,7 @@
                         </div>
                     </div>
                 </div>
+                
             </div>
         </section>
 
