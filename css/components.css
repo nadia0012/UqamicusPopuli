@@ -54,10 +54,8 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .vector-section { position: relative; height: 0; overflow: visible; }
 .vector-background-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: auto; z-index: -1; }
 
-
-
 /* ── Balado ──────────────────────────────────────────────── */
-.micro, .plateformes, .citation, .podcast-container, .podcast-card-img {
+.micro, .plateformes, .citation, .podcast-container, .podcast-card-img, .image-article img {
     border-radius: var(--radius-box); border: var(--bleu-original) 2px solid;
 }
 
@@ -140,6 +138,16 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .play-btn circle    { transition: fill 0.2s; }
 .play-btn:hover circle { fill: var(--jaune-pale1); }
 
+/* ── Intérieur des articles ──────────────────────────────────────────── */
+.image-article img{ width: 660px; height: 100%; }
+.image-article p{ text-align: end; font-size: 15px; color: #191919; font-weight: 300; margin: 5px; }
+.image-article a{ text-decoration: none; color: var(--bleu-original); }
+
+.in-article-title{ display: flex; flex-direction: column; gap: 30px; margin-bottom: auto; }
+.in-article-title h1{ font-size: 60px; }
+
+.divider { border: none; border-top: 1px solid var(--bleu-pale2); width: 100%; }
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1200px) {
     .blue-team { flex-direction: column; }
@@ -149,15 +157,9 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     .citation   { padding: 30px 50px; }
 
     .image-and-infos { flex-direction: column; }
-    .podcast-card-img {
-        max-width: 100%;
-        flex-shrink: 1;
-        height: 400px;
-    }
+    .podcast-card-img { max-width: 100%; flex-shrink: 1; height: 400px; }
 
-    .episode-img-wrapper{
-        width: 99%;
-    }
+    .episode-img-wrapper{ width: 99%; }
 
     .podcast-details { margin-top: 20px; margin-bottom: 20px; }
 }
