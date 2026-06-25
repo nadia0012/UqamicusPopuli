@@ -162,6 +162,143 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .next-prev-buttons{ display: flex; justify-content: center; gap: 20px; margin-top: -50px;}
 .return-article-button { display: flex; justify-content: center; gap: 20px; }
 
+/* ── Formulaire de contact ──────────────────────────────────────────── */
+/* ── Variables et réinitialisation de typographie ── */
+.contact-form, .input-title label, .contact-input input::placeholder, #file-chosen, 
+.contact-input textarea::placeholder, .choose-file,
+.contact-form button, .submit-wrapper.form-invalid::before, 
+.form-success-overlay .success-title, .form-success-overlay .success-subtitle, 
+.uploaded-area .row .details .name, .uploaded-area .row .details .size, 
+.field-error, .form-error-banner { font-family: Lato, sans-serif; }
+
+/* ── Formulaire principal ────────────────────────── */
+.contact-form {
+    display: flex; flex-direction: column; gap: 20px;
+    max-width: 1200px; width: 100%; margin-top: -30px;
+    padding: 40px 60px; position: relative; overflow: hidden;
+    border-radius: var(--radius-box);
+    background: var(--jaune-pale1);
+    box-shadow: -6px -6px 21.3px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* ── Inputs et Textarea ── */
+.contact-input input, .contact-input textarea {
+    display: flex; width: 100%; border: none;
+    border-radius: var(--radius-btn); background: var(--bleu-pale);
+}
+
+.contact-input input { height: 45px; padding-left: 10px; }
+.contact-input textarea { padding: 10px 0 0 10px; resize: vertical; }
+
+.contact-input input:focus, .contact-input textarea:focus { outline: 2px solid var(--bleu-fonce); }
+
+.contact-input input::placeholder, textarea::placeholder, #file-chosen {
+    font-size: 18px; font-weight: 300; opacity: 1;
+    background: var(--bleu-original); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* ── Titres et Layouts ── */
+.input-title { display: flex; align-items: center; gap: 5px; }
+.input-title label {
+    font-size: 20px; font-weight: 700;
+    background: var(--grad-bleu); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.name-and-email { display: flex; justify-content: space-between; gap: 60px; }
+.contact-input { flex: 1; }
+
+/* ── Fichiers et Upload ── */
+.choose-file { font-size: 18px; font-weight: 300; color: var(--bleu-original); }
+
+.uploaded-area { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.uploaded-area .row { display: flex; align-items: center; justify-content: space-between; background: var(--bleu-pale); padding: 10px 15px; border-radius: var(--radius-btn); }
+.uploaded-area .row .content { display: flex; align-items: center; gap: 10px; overflow: hidden; }
+.uploaded-area .row .details { display: flex; flex-direction: column; overflow: hidden; }
+.uploaded-area .row .details .name { 
+    font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    background: var(--grad-bleu); -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+}
+.uploaded-area .row .details .size { font-size: 11px; color: var(--bleu-moyen); }
+
+.file-upload-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 45px; /* Même hauteur que vos autres inputs */
+    padding: 5px; /* Petit padding pour que le bouton ne touche pas les bords */
+    background: var(--bleu-pale);
+    border-radius: var(--radius-btn);
+    overflow: hidden;
+}
+
+.custom-file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Prend toute la hauteur de l'encadré */
+    padding: 0 20px;
+    background: var(--grad-bleu);
+    color: white;
+    border-radius: var(--radius-btn);
+    cursor: pointer;
+    font-family: Lato, sans-serif;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+.custom-file-upload:hover {
+    transform: scale(1.02);
+}
+
+#file-chosen {
+    margin-left: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#attachment[hidden] {
+    display: none !important;
+}
+
+/* ── Bouton Submit ── */
+.contact-form button {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    border-radius: var(--radius-btn); max-width: 260px; height: 65px; padding: 20px 25px;
+    color: #FFF; font-size: 25px; font-weight: 700; margin: 0 auto;
+    cursor: pointer; transition: transform var(--transition-base);
+}
+.contact-form button:hover { transform: scale(1.03); background: linear-gradient(270deg, rgba(238,238,238,0.20) 0%, rgba(250,239,255,0.20) 100%), var(--grad-bleu); }
+.contact-form button.disabled { pointer-events: none; }
+.contact-form button.disabled::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0.5); border-radius: var(--radius-btn); }
+
+.submit-wrapper { display: flex; justify-content: center; margin: 30px auto 0; position: relative; max-width: 260px; }
+.submit-wrapper.form-invalid { cursor: not-allowed; }
+.submit-wrapper.form-invalid::before {
+    content: 'Formulaire invalide ou incomplet'; position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%); background: var(--bleu-fonce); color: #fff; font-size: 13px;
+    padding: 6px 12px; border-radius: 6px; white-space: nowrap; opacity: 0; transition: opacity var(--transition-fast); z-index: 10;
+}
+.submit-wrapper.form-invalid:hover::before { opacity: 1; }
+
+/* ── Succès et Validation ── */
+.form-success-overlay {
+    position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center;
+    background: rgba(255,255,255,0.8); z-index: 100; pointer-events: none; opacity: 0; border-radius: var(--radius-box);
+}
+.form-success-overlay.visible { display: flex !important; animation: fadeInThenOut 3s ease forwards; }
+@keyframes fadeInThenOut { 0%, 100% { opacity: 0; } 10%, 90% { opacity: 1; pointer-events: auto; } }
+
+.form-success-overlay .success-title { font-size: 35px; background: var(--grad-bleu); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.form-success-overlay .success-subtitle { font-size: 25px; color: var(--bleu-moyen); -webkit-text-stroke: 2px var(--bleu-fonce); }
+
+.contact-input input.error-state, .contact-input textarea.error-state { outline: 2px solid #E24B4A; }
+.field-error { display: flex; align-items: center; gap: 6px; margin-top: 6px; color: #A32D2D; font-size: 13px; font-weight: 500; }
+.form-error-banner { display: none; align-items: flex-start; gap: 10px; border-radius: var(--radius-btn); padding: 14px 18px; font-size: 14px; font-weight: 500; margin-top: 16px; }
+.form-error-banner.visible { display: flex; }
+.form-error-banner.error { background: #FCEBEB; color: #791F1F; border: 1px solid #F7C1C1; }
+.form-error-banner.warning { background: #FAEEDA; color: #633806; border: 1px solid #FAC775; }
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1200px) {
     .blue-team { flex-direction: column; }

@@ -155,6 +155,117 @@
                 </defs>
             </svg>
         </section>
+
+        <section class="menu-section">
+            <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" class="email-section">
+                <input type="hidden" name="access_key" value=""> <!-- valeur à remplir plus tard -->
+                <input type="checkbox" name="botcheck" style="display:none">
+
+                <div class="contact-form">
+                    <div class="form-success-overlay" id="formSuccessOverlay">
+                        <!-- Ton SVG exact -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="113" height="113" viewBox="0 0 125 125" fill="none">
+                            <mask id="mask0_893_1021" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="125" height="125">
+                                <path d="M118.65 62.1504C118.65 93.3553 93.355 118.65 62.15 118.65H5.65002V62.1504C5.65002 30.9454 30.9451 5.65039 62.15 5.65039C93.355 5.65039 118.65 30.9454 118.65 62.1504Z" fill="white" stroke="white" stroke-width="11.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M33.9 67.8004L50.85 84.7504L87.575 48.0254" stroke="black" stroke-width="11.3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </mask>
+                            <g mask="url(#mask0_893_1021 )">
+                                <path d="M-5.35022 -5.34961H130.25V130.25H-5.35022V-5.34961Z" fill="url(#paint0_linear_893_1021)"/>
+                            </g>
+                            <defs>
+                                <linearGradient id="paint0_linear_893_1021" x1="130.25" y1="62.4504" x2="-5.35022" y2="62.4504" gradientUnits="userSpaceOnUse">
+                                    <stop stop-color="#6B3D75"/>
+                                    <stop offset="1" stop-color="#472952"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <p class="success-title">Merci!</p>
+                        <p class="success-subtitle">Le formulaire a été envoyé avec succès</p>
+                    </div>
+                    
+                    <div class="name-and-email">
+                        <div class="contact-input">
+                            <div class="input-title">                    
+                                <label for="full-name">Nom complet</label>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M6.89077 13.862C6.84355 13.7445 6.53898 12.8811 6.21198 11.9449C5.52964 9.98425 5.38208 9.66121 4.95474 9.20306C4.52739 8.74492 4.08588 8.537 2.04124 7.83216C1.06969 7.49737 0.19493 7.17902 0.0981284 7.12498C-0.10728 7.01221 -0.20172 7.05215 2.0684 6.26743C4.02214 5.59314 4.72572 5.23955 5.10702 4.74147C5.39861 4.36086 5.9747 2.92887 6.64404 0.9248C6.82348 0.386777 6.99347 -0.0278995 7.02299 0.00146856C7.0525 0.0308366 7.3913 0.938896 7.77497 2.01964C8.90354 5.19491 8.88583 5.17729 11.9658 6.24981C13.877 6.91588 14.2052 7.07329 13.9006 7.17784C11.2362 8.09295 9.68975 8.69441 9.36039 8.94462C8.83389 9.34403 8.53404 9.94314 7.77143 12.1211C7.43144 13.0902 7.11389 13.9266 7.06548 13.9795C7.0159 14.0323 6.93799 13.9795 6.89077 13.862Z" fill="#F59F2D"/>
+                                </svg>
+                            </div>
+                            <input type="text" id="full-name" name="name" required placeholder="Nom complet">
+                        </div>
+
+                        <div class="contact-input">
+                            <div class="input-title">                    
+                                <label for="email">Courriel</label>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                    <path d="M6.89077 13.862C6.84355 13.7445 6.53898 12.8811 6.21198 11.9449C5.52964 9.98425 5.38208 9.66121 4.95474 9.20306C4.52739 8.74492 4.08588 8.537 2.04124 7.83216C1.06969 7.49737 0.19493 7.17902 0.0981284 7.12498C-0.10728 7.01221 -0.20172 7.05215 2.0684 6.26743C4.02214 5.59314 4.72572 5.23955 5.10702 4.74147C5.39861 4.36086 5.9747 2.92887 6.64404 0.9248C6.82348 0.386777 6.99347 -0.0278995 7.02299 0.00146856C7.0525 0.0308366 7.3913 0.938896 7.77497 2.01964C8.90354 5.19491 8.88583 5.17729 11.9658 6.24981C13.877 6.91588 14.2052 7.07329 13.9006 7.17784C11.2362 8.09295 9.68975 8.69441 9.36039 8.94462C8.83389 9.34403 8.53404 9.94314 7.77143 12.1211C7.43144 13.0902 7.11389 13.9266 7.06548 13.9795C7.0159 14.0323 6.93799 13.9795 6.89077 13.862Z" fill="#F59F2D"/>
+                                </svg>
+                            </div>
+                            <input type="text" id="email" name="email" required placeholder="ton.courriel@exemple.com">
+                        </div>
+                    </div>
+
+                    <div class="contact-input">
+                        <div class="input-title">                    
+                            <label for="subject">Sujet</label>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M6.89077 13.862C6.84355 13.7445 6.53898 12.8811 6.21198 11.9449C5.52964 9.98425 5.38208 9.66121 4.95474 9.20306C4.52739 8.74492 4.08588 8.537 2.04124 7.83216C1.06969 7.49737 0.19493 7.17902 0.0981284 7.12498C-0.10728 7.01221 -0.20172 7.05215 2.0684 6.26743C4.02214 5.59314 4.72572 5.23955 5.10702 4.74147C5.39861 4.36086 5.9747 2.92887 6.64404 0.9248C6.82348 0.386777 6.99347 -0.0278995 7.02299 0.00146856C7.0525 0.0308366 7.3913 0.938896 7.77497 2.01964C8.90354 5.19491 8.88583 5.17729 11.9658 6.24981C13.877 6.91588 14.2052 7.07329 13.9006 7.17784C11.2362 8.09295 9.68975 8.69441 9.36039 8.94462C8.83389 9.34403 8.53404 9.94314 7.77143 12.1211C7.43144 13.0902 7.11389 13.9266 7.06548 13.9795C7.0159 14.0323 6.93799 13.9795 6.89077 13.862Z" fill="#F59F2D"/>
+                            </svg>
+                        </div>
+                        <input type="text" id="subject" name="subject" required placeholder="De quoi ton message parle ?">
+                    </div>
+
+                    <div class="contact-input">
+                        <div class="input-title">                    
+                            <label for="message">Message</label>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path d="M6.89077 13.862C6.84355 13.7445 6.53898 12.8811 6.21198 11.9449C5.52964 9.98425 5.38208 9.66121 4.95474 9.20306C4.52739 8.74492 4.08588 8.537 2.04124 7.83216C1.06969 7.49737 0.19493 7.17902 0.0981284 7.12498C-0.10728 7.01221 -0.20172 7.05215 2.0684 6.26743C4.02214 5.59314 4.72572 5.23955 5.10702 4.74147C5.39861 4.36086 5.9747 2.92887 6.64404 0.9248C6.82348 0.386777 6.99347 -0.0278995 7.02299 0.00146856C7.0525 0.0308366 7.3913 0.938896 7.77497 2.01964C8.90354 5.19491 8.88583 5.17729 11.9658 6.24981C13.877 6.91588 14.2052 7.07329 13.9006 7.17784C11.2362 8.09295 9.68975 8.69441 9.36039 8.94462C8.83389 9.34403 8.53404 9.94314 7.77143 12.1211C7.43144 13.0902 7.11389 13.9266 7.06548 13.9795C7.0159 14.0323 6.93799 13.9795 6.89077 13.862Z" fill="#F59F2D"/>
+                            </svg>
+                        </div>
+                        <textarea id="message" name="message" rows="10" placeholder="Laisse nous une note..." required></textarea>
+                    </div>
+
+                    <div class="contact-input">
+                        <div class="input-title">
+                            <label>Pièce jointe</label>
+                        </div>
+                        
+                        <!-- Le conteneur qui aura l'encadré bleu -->
+                        <div class="file-upload-wrapper">
+                            <input type="file" id="attachment" name="attachment" multiple hidden onchange="updateFileLabel(this)">
+                            
+                            <label for="attachment" class="custom-file-upload">
+                                Choisir un fichier
+                            </label>
+                            
+                            <span id="file-chosen">Aucun fichier choisi</span>
+                        </div>
+                        
+                        <ul class="uploaded-area"></ul>
+                    </div>
+
+
+
+                    <div class="form-error-banner" id="formErrorBanner">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:1px">
+                            <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-width="1.2"/>
+                            <path d="M8 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            <circle cx="8" cy="11" r=".8" fill="currentColor"/>
+                        </svg>
+                        <span id="formErrorMessage"></span>
+                    </div>
+
+                    <div class="submit-wrapper form-invalid">
+                        <button type="submit" class="articles-button">
+                            Envoyer
+                            <svg xmlns="http://www.w3.org/2000/svg" width="34" height="33" viewBox="0 0 34 33" fill="none">
+                                <path d="M31.0161 0.125929C32.7875 -0.474798 34.4892 1.17678 33.8703 2.89604L23.54 31.5448C22.8688 33.4028 20.2012 33.5077 19.3783 31.7089L14.3936 20.8248L21.4095 14.0137C21.6405 13.7731 21.7662 13.4549 21.7602 13.1261C21.7542 12.7973 21.617 12.4836 21.3774 12.2511C21.1379 12.0186 20.8146 11.8854 20.4759 11.8796C20.1371 11.8738 19.8092 11.9958 19.5614 12.22L12.5438 19.0294L1.32961 14.1914C-0.523728 13.391 -0.413888 10.8036 1.49873 10.1521L31.0161 0.125929Z" fill="white"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </section>
     </main>
 
     <footer>
@@ -163,7 +274,7 @@
                 <a href="index.html">
                     <img src="images/LogoUqamicus.svg" alt="Logo de l'Uqamicus Populi">
                     <div class="footer-titles">
-                        <h2 class="footer-subtitle">Le journal des étudiants en droit de l’UQAM</h2>
+                        <h2 class="footer-subtitle">Le journal des étudiants en droit de l'UQAM</h2>
                         <h1 class="footer-title">L'Uqamicus Populi</h1>
                     </div>
                 </a>

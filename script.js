@@ -201,3 +201,185 @@ function genererPagination() {
 
 // Initialisation
 afficherPage(1);
+
+// =============================================
+// FORMULAIRE — soumission Web3Forms + overlay
+// =============================================
+(function () {
+    const contactForm = document.querySelector('.contact-form');
+    if (!contactForm) return;
+
+    const overlay = document.getElementById('formSuccessOverlay');
+    const wrapper = document.querySelector('.submit-wrapper');
+    const btn = contactForm.querySelector('button');
+    const requiredFields = contactForm.querySelectorAll('[required]');
+    const emailField = document.getElementById('email');
+    const uploadedArea = document.querySelector('.uploaded-area'); // Ajouté pour la cohérence
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    let selectedFiles = []; // IMPORTANT : Doit être défini ici pour être utilisé plus bas
+    const btnOriginalHTML = btn.innerHTML;
+
+    // --- 1. VALIDATION ---
+    function checkValidity() {
+        const allValid = Array.from(requiredFields).every(field => {
+            if (field.type === 'file') return true;
+            const config = fieldConfig[field.id];
+            if (!config) return field.value.trim() !== '';
+            return config.validate(field.value.trim());
+        });
+
+        if (allValid) {
+            btn.classList.remove('disabled');
+            btn.style.pointerEvents = 'auto';
+            wrapper.classList.remove('form-invalid');
+        } else {
+            btn.classList.add('disabled');
+            // On laisse pointer-events à auto pour le curseur "interdit" demandé précédemment
+            btn.style.pointerEvents = 'auto'; 
+            wrapper.classList.add('form-invalid');
+        }
+    }
+
+    // --- 2. CONFIGURATION DES CHAMPS ---
+    const fieldConfig = {
+        'full-name': {
+            empty: 'Veuillez entrer votre nom complet.',
+            invalid: 'Le nom doit contenir au moins 2 caractères sans chiffres.',
+            validate: val => val.length >= 2 && !/\d/.test(val)
+        },
+        'email': {
+            empty: 'Veuillez entrer votre adresse courriel.',
+            invalid: 'Format de courriel invalide (ex: nom@domaine.com).',
+            validate: val => emailRegex.test(val)
+        },
+        'subject': {
+            empty: 'Veuillez entrer un sujet.',
+            invalid: 'Le sujet doit contenir au moins 5 caractères.',
+            validate: val => val.length >= 5
+        },
+        'message': {
+            empty: 'Veuillez écrire votre message.',
+            invalid: 'Le message doit contenir au moins 20 caractères.',
+            validate: val => val.length >= 20
+        },
+    };
+
+    // --- 3. GESTION DES ERREURS VISUELLES ---
+    const errorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>`;
+
+    function showFieldError(field, msg ) {
+        field.classList.add('error-state');
+        let errEl = field.parentElement.querySelector('.field-error');
+        if (!errEl) {
+            errEl = document.createElement('div');
+            errEl.className = 'field-error';
+            field.parentElement.appendChild(errEl);
+        }
+        errEl.innerHTML = `${errorIcon} ${msg}`;
+    }
+
+    function clearFieldError(field) {
+        field.classList.remove('error-state');
+        const errEl = field.parentElement.querySelector('.field-error');
+        if (errEl) errEl.remove();
+    }
+
+    // --- 4. LISTENERS ---
+    Object.keys(fieldConfig).forEach(id => {
+        const field = document.getElementById(id);
+        if (!field) return;
+
+        field.addEventListener('input', () => {
+            const config = fieldConfig[field.id];
+            if (field.value.trim() !== '' && !config.validate(field.value.trim())) {
+                showFieldError(field, config.invalid);
+            } else {
+                clearFieldError(field);
+            }
+            checkValidity();
+        });
+
+        field.addEventListener('blur', () => {
+            const config = fieldConfig[field.id];
+            if (field.value.trim() === '') {
+                showFieldError(field, config.empty);
+            } else if (!config.validate(field.value.trim())) {
+                showFieldError(field, config.invalid);
+            }
+            checkValidity();
+        });
+    });
+
+    // --- 5. GESTION DES FICHIERS ---
+    // Cette fonction doit être accessible globalement si appelée par onchange="" dans le HTML
+    window.updateFileLabel = function(input) {
+        const fileChosen = document.getElementById('file-chosen');
+        selectedFiles = Array.from(input.files); // On stocke les fichiers
+        
+        if (selectedFiles.length > 0) {
+            fileChosen.textContent = selectedFiles.length === 1 
+                ? selectedFiles[0].name 
+                : selectedFiles.length + " fichiers sélectionnés";
+        } else {
+            fileChosen.textContent = "Aucun fichier choisi";
+        }
+        checkValidity();
+    };
+
+    // --- 6. SOUMISSION ---
+    wrapper.addEventListener('click', async function (e) {
+        if (btn.classList.contains('disabled')) {
+            e.preventDefault();
+            return;
+        }
+        
+        // Si c'est un bouton submit dans un form, le click sur le wrapper peut doubler l'envoi
+        // Assurez-vous que l'événement vient bien d'une intention de soumission
+    });
+
+    contactForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        if (btn.classList.contains('disabled')) return;
+
+        btn.classList.add('disabled');
+        btn.innerHTML = 'Envoi en cours...';
+
+        try {
+            const formData = new FormData(contactForm);
+            
+            // Logique Cloudinary (si vous avez la fonction uploadToCloudinary définie ailleurs)
+            if (selectedFiles.length > 0 && typeof uploadToCloudinary === 'function') {
+                const urls = await Promise.all(selectedFiles.map(file => uploadToCloudinary(file)));
+                const fileLinks = '\n\n📎 Fichiers joints :\n' + urls.map((url, i) => `${i + 1}. ${selectedFiles[i].name} : ${url}`).join('\n');
+                formData.set('message', formData.get('message') + fileLinks);
+                formData.delete('attachment');
+            }
+
+            const response = await fetch(contactForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                if (overlay) overlay.classList.add('visible');
+                contactForm.reset();
+                selectedFiles = [];
+                if (document.getElementById('file-chosen')) {
+                    document.getElementById('file-chosen').textContent = "Aucun fichier choisi";
+                }
+                setTimeout(() => overlay.classList.remove('visible'), 3000);
+            } else {
+                alert('Erreur lors de l\'envoi.');
+            }
+        } catch (error) {
+            console.error(error);
+        } finally {
+            btn.innerHTML = btnOriginalHTML;
+            checkValidity();
+        }
+    });
+
+    checkValidity();
+})();
