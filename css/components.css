@@ -54,6 +54,9 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .vector-section { position: relative; height: 0; overflow: visible; }
 .vector-background-bottom { position: absolute; bottom: 0; left: 0; width: 100%; height: auto; z-index: -1; }
 
+.citation-article { margin-left: 50px; }
+.image-in-article { width: 400px; height: auto; display: block; margin: 0 auto; }
+
 /* ── Balado ──────────────────────────────────────────────── */
 .micro, .plateformes, .citation, .podcast-container, .podcast-card-img, .image-article img {
     border-radius: var(--radius-box); border: var(--bleu-original) 2px solid;
@@ -145,15 +148,17 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .image-article a{ text-decoration: none; color: var(--bleu-original); }
 
 .in-article-title h1{ font-size: 60px; }
-.article-date-author{ display: flex; justify-content: center;}
+.article-date-author{ display: flex; justify-content: center; }
 .divider { border: none; border-top: 1px solid var(--bleu-pale2); width: 100%; }
 
 .article-paragraphe h1{ font-size: 25px; }
 .article-paragraphe p{ margin: 0px; }
-.article-paragraphe { margin-bottom: 0px;}
+.article-paragraphe { margin-bottom: 10px; }
+
+.intro-article { display: flex; flex-direction: column; margin-top: -50px; gap: 20px; }
 
 .bibliographie h1{ font-size: 35px; }
-.bibliographie { background-color: var(--bleu-pale); padding: 20px; border: var(--bleu-original) 2px solid; border-radius: var(--radius-box); }
+.bibliographie { background-color: var(--bleu-pale); padding: 20px; border: var(--bleu-original) 2px solid; border-radius: var(--radius-box); margin-top: 10px;}
 .bibliographie a { text-decoration: none; color: var(--bleu-original); word-break: break-all;}
 .biblio-section { margin-top: 0px; }
 
