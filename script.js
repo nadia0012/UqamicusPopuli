@@ -34,6 +34,15 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
 
+window.addEventListener('scroll', () => {
+    const scrollIcon = document.querySelector('.scroll-indicator');
+    if (window.scrollY > 50) {
+        scrollIcon.style.opacity = '0';
+    } else {
+        scrollIcon.style.opacity = '1';
+    }
+});
+
 //Audio Podcast
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('audio[id^="audio"]').forEach(audio => {

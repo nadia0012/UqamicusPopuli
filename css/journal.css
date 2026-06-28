@@ -14,6 +14,28 @@
     transform: translateY(0);
 }
 
+.scroll-indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    transform: translateY(-110px);
+    transition: opacity 0.4s ease; /* ← ajouter */
+}
+
+.mouse-body {
+    opacity: 0.3;
+}
+
+.mouse-wheel {
+    animation: scrollWheel 2s ease-in-out infinite;
+}
+
+@keyframes scrollWheel {
+    0%   { transform: translateY(0);    opacity: 1; }
+    50%  { transform: translateY(8px);  opacity: 0.3; }
+    100% { transform: translateY(0);    opacity: 1; }
+}
+
 /* ── Layout de base ─────────────────────────────────────── */
 .main-accueil, .menu-section, .menu-left {
     max-width: 1400px;
@@ -108,8 +130,11 @@
 
 .date-and-author, .article-date-author { display: flex; gap: 12px; align-items: center; }
 
-.article-card-small .article-card-info, .article-card-author-row {
+.article-card-small, .article-card-author-row {
     display: flex; align-items: center; justify-content: space-between;
+}
+.article-card-small .article-card-info {
+    display: flex; align-items: end; justify-content: space-between;
 }
 .article-card-small .article-card-info { flex-direction: row; gap: 6px; }
 
@@ -194,7 +219,7 @@
 
     .article-card-img       { width: 45%; max-width: 370px; height: auto; }
     .article-card-small-img { width: 160px; height: auto; }
-    .article-card-small .article-card-info { flex-direction: row; align-items: center; gap: 8px; }
+    .article-card-small .article-card-info { flex-direction: row; gap: 8px; }
 
     .main-left h2, .article-card-title { font-size: 25px; }
 
