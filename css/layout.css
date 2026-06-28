@@ -10,9 +10,24 @@ header {
     padding: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 90px;
-    align-items: flex-start;
+    align-items: flex-start;  /* ← flex-start pour coller en haut */
+    box-sizing: border-box;
+    width: 100%;
+}
+
+#main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    box-sizing: border-box;
+    transition: top 0.3s ease;
+    z-index: 1000;
+}
+
+#main-header.header-hidden {
+    top: -110px; /* valeur supérieure à la hauteur de ton header */
 }
 
 #navbar {
@@ -164,6 +179,11 @@ header {
 @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.8); }
     to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Main section ─────────────────────────────────────── */
+main {
+    margin-top: 200px; /* ajuste selon la hauteur réelle de ton header */
 }
 
 /* ============================================================

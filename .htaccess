@@ -1,0 +1,18 @@
+RewriteEngine On
+
+# Redirige /index.html vers / (URL propre pour la page d'accueil)
+RewriteRule ^index\.html$ https://www.uqamicuspopuli.com/ [R=301,L]
+
+# Redirige les .html vers l'URL sans extension
+RewriteCond %{THE_REQUEST} \s/(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Affiche le bon fichier .html sans changer l'URL
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Gère les articles dans le sous-dossier /articles/
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^articles/([^\.]+)$ articles/$1.html [NC,L]

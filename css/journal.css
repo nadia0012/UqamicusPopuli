@@ -2,6 +2,18 @@
     journal.css — Pages Index & Contact  |  L'Uqamicus Populi
    ============================================================ */
 
+/* ── Animation des sections ─────────────────────────────────────── */
+.scroll-anim {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-anim.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* ── Layout de base ─────────────────────────────────────── */
 .main-accueil, .menu-section, .menu-left {
     max-width: 1400px;
@@ -175,7 +187,7 @@
     .main-buttons  { justify-content: center; }
     .menu-section  { margin: 60px auto; }
 
-    .menu-articles-grid { flex-direction: column; align-items: center; }
+    .menu-articles-grid { flex-direction: column; align-items: center; gap: 20px; }
     .article-card { max-width: none; width: 100%; height: auto; }
     .article-card-small { height: auto; flex: none; }
     .article-cards-side { width: 100%; }

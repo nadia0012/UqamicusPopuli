@@ -7,6 +7,33 @@ hamburgerBtn.addEventListener('click', () => {
     navbar.classList.toggle('active');
 });
 
+let lastScrollY = window.scrollY;
+
+window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY < lastScrollY) {
+        // Scroll vers le haut → on montre
+        document.getElementById('main-header').classList.remove('header-hidden');
+    } else {
+        // Scroll vers le bas → on cache
+        document.getElementById('main-header').classList.add('header-hidden');
+    }
+
+    lastScrollY = currentScrollY;
+});
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target); // animation une seule fois
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
+
 //Audio Podcast
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('audio[id^="audio"]').forEach(audio => {
