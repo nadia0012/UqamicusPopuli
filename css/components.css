@@ -162,7 +162,7 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .bibliographie a { text-decoration: none; color: var(--bleu-original); word-break: break-all;}
 .biblio-section { margin-top: 0px; }
 
-.next-prev-article  { background-color: var(--jaune-pale2); color: var(--bleu-original); }
+.next-prev-article  { background-color: var(--jaune-pale2); color: var(--bleu-original); width: 196px; justify-content: center; gap: 15px; }
 .next-prev-article:hover  { background-color: var(--jaune-pale1); }
 .next-prev-buttons{ display: flex; justify-content: center; gap: 20px; margin-top: -50px;}
 .return-article-button { display: flex; justify-content: center; gap: 20px; }
