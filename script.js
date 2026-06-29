@@ -1,14 +1,13 @@
 // Menu hamburger
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const navbar = document.getElementById('navbar');
-
 hamburgerBtn.addEventListener('click', () => {
     // Bascule la classe "active" sur le parent nav
     navbar.classList.toggle('active');
 });
 
+// Afficher et cacher l'en-tête quand on scroll down et up, mais garde l'en-tête visible tout en haut de la page
 let lastScrollY = window.scrollY;
-
 window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY;
 
@@ -35,8 +34,8 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.15 });
 
+//Animation de scroll sur tous les éléments qui fade in et show up
 document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
-
 window.addEventListener('scroll', () => {
     const scrollIcon = document.querySelector('.scroll-indicator');
     if (window.scrollY > 50) {
@@ -45,6 +44,39 @@ window.addEventListener('scroll', () => {
         scrollIcon.style.opacity = '1';
     }
 });
+
+//Enveloppe effet parallax
+const envelopeOverlay = document.querySelector('.envelope-overlay');
+const envelopeContact = document.querySelector('.envelope-contact');
+const footer = document.querySelector('footer'); // adapte le sélecteur si besoin
+
+let currentShift = 0;
+let targetShift = 0;
+
+function lerp(a, b, t) {
+  return a + (b - a) * t;
+}
+
+function animate() {
+  const rect = envelopeContact.getBoundingClientRect();
+  const raw = -rect.top * 0.06;
+
+  // Distance entre le bas du wrapper et le haut du footer
+  const envelopeBottom = envelopeContact.getBoundingClientRect().bottom;
+  const footerTop = footer.getBoundingClientRect().top;
+  const distanceToFooter = footerTop - envelopeBottom;
+
+  // On arrête de descendre quand on approche du footer
+  const maxShift = Math.max(0, raw - Math.min(0, distanceToFooter - 20));
+  targetShift = Math.min(raw, maxShift);
+
+  currentShift = lerp(currentShift, targetShift, 0.08);
+  envelopeOverlay.style.transform = `translateY(${currentShift}px)`;
+
+  requestAnimationFrame(animate);
+}
+
+animate();
 
 //Audio Podcast
 document.addEventListener('DOMContentLoaded', () => {

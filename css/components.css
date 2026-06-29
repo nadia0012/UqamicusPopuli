@@ -179,10 +179,10 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 /* ── Formulaire principal ────────────────────────── */
 .contact-form {
     display: flex; flex-direction: column; gap: 20px;
-    max-width: 1200px; width: 100%; margin-top: -30px;
+    max-width: 1200px; width: auto; margin-top: -30px;
     padding: 40px 60px; position: relative; overflow: hidden;
     border-radius: var(--radius-box);
-    background: var(--jaune-pale1);
+    background: linear-gradient(180deg, #FFFAF0 84.13%, #FFFEFA 100%);
     box-shadow: -6px -6px 21.3px 0 rgba(0, 0, 0, 0.04);
 }
 
@@ -304,6 +304,39 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .form-error-banner.error { background: #FCEBEB; color: #791F1F; border: 1px solid #F7C1C1; }
 .form-error-banner.warning { background: #FAEEDA; color: #633806; border: 1px solid #FAC775; }
 
+/* ── Enveloppe ── */
+.envelope-contact {
+    position: relative;
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    border-radius: var(--radius-box);
+    overflow: visible;
+  }
+  
+  .envelope-form-area {
+    position: relative;
+    z-index: 1;
+    padding: 40px 10% 260px; /* padding-bottom laisse de la place pour le SVG */
+  }
+  
+  .envelope-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    pointer-events: none; /* le form reste cliquable en dessous */
+    line-height: 0;
+    will-change: transform;
+  }
+  
+  .envelope-overlay svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1200px) {
     .blue-team { flex-direction: column; }
@@ -333,6 +366,7 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     .citation    { padding: 30px 40px; height: 450px; }
     .image-article img{ width: 100%; height: 100%; }
     .in-article-title h1 { font-size:  45px;}
+    .name-and-email { flex-direction: column; gap: 20px; }
 }
 
 @media (max-width: 600px) {
