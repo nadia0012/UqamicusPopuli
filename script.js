@@ -12,7 +12,10 @@ let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY;
 
-    if (currentScrollY < lastScrollY) {
+    if (currentScrollY <= 0) {
+        // Tout en haut → toujours visible
+        document.getElementById('main-header').classList.remove('header-hidden');
+    } else if (currentScrollY < lastScrollY) {
         // Scroll vers le haut → on montre
         document.getElementById('main-header').classList.remove('header-hidden');
     } else {
