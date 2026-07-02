@@ -182,8 +182,13 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     max-width: 1200px; width: auto; margin-top: -30px;
     padding: 40px 60px; position: relative; overflow: hidden;
     border-radius: var(--radius-box);
-    background: linear-gradient(180deg, #FFFAF0 84.13%, #FFFEFA 100%);
-    box-shadow: -6px -6px 21.3px 0 rgba(0, 0, 0, 0.04);
+
+
+    background: 
+    linear-gradient(to bottom, #FFFAF0, #FFFEFA) padding-box,
+    linear-gradient(180deg, #FFDD62 20%, #FFFEFA 50%) border-box;
+    border: 1px solid transparent;
+    border-radius: var(--radius-box);
 }
 
 /* ── Inputs et Textarea ── */
@@ -195,7 +200,7 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .contact-input input { height: 45px; padding-left: 10px; }
 .contact-input textarea { padding: 10px 0 0 10px; resize: vertical; }
 
-.contact-input input:focus, .contact-input textarea:focus { outline: 2px solid var(--bleu-fonce); }
+.contact-input input:focus, .contact-input textarea:focus { outline: 2px solid var(--bleu-original); }
 
 .contact-input input::placeholder, textarea::placeholder, #file-chosen {
     font-size: 18px; font-weight: 300; opacity: 1;
@@ -317,7 +322,7 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
   .envelope-form-area {
     position: relative;
     z-index: 1;
-    padding: 40px 10% 260px; /* padding-bottom laisse de la place pour le SVG */
+    padding: 0px 10.4% 250px; /* padding-bottom laisse de la place pour le SVG */
   }
   
   .envelope-overlay {
