@@ -1,3 +1,249 @@
+// =============================================
+// FICHIERS + FORMULAIRE
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+
+    let selectedFiles = [];
+    const fileInput = document.getElementById('attachment');
+    const uploadedArea = document.querySelector('.uploaded-area');
+
+    const fileSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 44 59" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M25.6667 0H5.5C4.04131 0 2.64236 0.579462 1.61091 1.61091C0.579462 2.64236 0 4.04131 0 5.5V53.1667C0 54.6254 0.579462 56.0243 1.61091 57.0558C2.64236 58.0872 4.04131 58.6667 5.5 58.6667H38.5C39.9587 58.6667 41.3576 58.0872 42.3891 57.0558C43.4205 56.0243 44 54.6254 44 53.1667V18.3333H43.9853L25.6667 0ZM22 5.88133V21.0833C22 21.5893 22.4107 22 22.9167 22H38.1223C38.3036 21.9996 38.4806 21.9455 38.6311 21.8445C38.7816 21.7435 38.8987 21.6002 38.9678 21.4327C39.0369 21.2651 39.0547 21.0808 39.0191 20.9032C38.9835 20.7255 38.896 20.5623 38.7677 20.4343L23.5657 5.23233C23.4375 5.1038 23.274 5.01624 23.096 4.98073C22.9179 4.94522 22.7334 4.96338 22.5657 5.0329C22.3979 5.10241 22.2547 5.22016 22.154 5.3712C22.0533 5.52225 21.9997 5.6998 22 5.88133Z" fill="#00508F"/>
+    </svg>`;
+
+    const deleteSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" style="cursor:pointer; flex-shrink:0;">
+        <path d="M18 6L6 18M6 6l12 12" stroke="#00508F" stroke-width="2" stroke-linecap="round"/>
+    </svg>`;
+
+    if (fileInput) {
+        fileInput.addEventListener('change', function () {
+            const newFiles = Array.from(this.files);
+            newFiles.forEach(newFile => {
+                const alreadyExists = selectedFiles.some(f => f.name === newFile.name && f.size === newFile.size);
+                if (!alreadyExists) selectedFiles.push(newFile);
+            });
+            renderFiles();
+        });
+    }
+
+    function renderFiles() {
+        uploadedArea.innerHTML = '';
+        const dt = new DataTransfer();
+        selectedFiles.forEach(file => dt.items.add(file));
+        fileInput.files = dt.files;
+
+        selectedFiles.forEach((file, index) => {
+            let fileName = file.name;
+            if (fileName.length >= 20) {
+                const splitName = fileName.split('.');
+                fileName = splitName[0].substring(0, 13) + '... .' + splitName[splitName.length - 1];
+            }
+            const fileSize = file.size < 1024 * 1024
+                ? Math.floor(file.size / 1024) + ' KB'
+                : (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+
+            const li = document.createElement('li');
+            li.classList.add('row');
+            li.innerHTML = `
+                <div class="content">
+                    ${fileSVG}
+                    <div class="details">
+                        <span class="name">${fileName}</span>
+                        <span class="size">${fileSize}</span>
+                    </div>
+                </div>
+                ${deleteSVG}
+            `;
+            li.querySelector('svg:last-child').addEventListener('click', () => {
+                selectedFiles.splice(index, 1);
+                renderFiles();
+            });
+            uploadedArea.appendChild(li);
+        });
+    }
+
+    // =============================================
+    // CLOUDINARY
+    // =============================================
+    async function uploadToCloudinary(file) {
+        const cloudName = 'dckex6rbv';
+        const uploadPreset = 'uqamicus_uploads';
+
+        const data = new FormData();
+        data.append('file', file);
+        data.append('upload_preset', uploadPreset);
+
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
+            method: 'POST',
+            body: data,
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || 'Cloudinary upload failed');
+        }
+
+        const result = await response.json();
+        return result.secure_url;
+    }
+
+    // =============================================
+    // FORMULAIRE
+    // =============================================
+    const contactForm = document.querySelector('.contact-form');
+    if (!contactForm) return;
+
+    const overlay = document.getElementById('formSuccessOverlay');
+    const wrapper = document.querySelector('.submit-wrapper');
+    const btn = contactForm.querySelector('button');
+    const requiredFields = contactForm.querySelectorAll('[required]');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const btnOriginalHTML = btn.innerHTML;
+
+    const errorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="none" style="flex-shrink:0">
+        <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M8 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="8" cy="11" r=".8" fill="currentColor"/>
+    </svg>`;
+
+    const fieldConfig = {
+        'full-name': {
+            empty: 'Veuillez entrer votre nom complet.',
+            invalid: 'Le nom doit contenir au moins 2 caractères sans chiffres.',
+            validate: val => val.length >= 2 && !/\d/.test(val)
+        },
+        'email': {
+            empty: 'Veuillez entrer votre adresse courriel.',
+            invalid: 'Format de courriel invalide (ex: nom@domaine.com).',
+            validate: val => emailRegex.test(val)
+        },
+        'subject': {
+            empty: 'Veuillez entrer un sujet.',
+            invalid: 'Le sujet doit contenir au moins 5 caractères.',
+            validate: val => val.length >= 5
+        },
+        'message': {
+            empty: 'Veuillez écrire votre message.',
+            invalid: 'Le message doit contenir au moins 20 caractères.',
+            validate: val => val.length >= 20
+        },
+    };
+
+    function checkValidity() {
+        const allValid = Array.from(requiredFields).every(field => {
+            if (field.type === 'file') return true;
+            const config = fieldConfig[field.id];
+            if (!config) return field.value.trim() !== '';
+            return config.validate(field.value.trim());
+        });
+
+        if (allValid) {
+            btn.classList.remove('disabled');
+            btn.style.pointerEvents = 'auto';
+            wrapper.classList.remove('form-invalid');
+        } else {
+            btn.classList.add('disabled');
+            btn.style.pointerEvents = 'none';
+            wrapper.classList.add('form-invalid');
+        }
+    }
+
+    function showFieldError(field, msg) {
+        field.classList.add('error-state');
+        let errEl = field.parentElement.querySelector('.field-error');
+        if (!errEl) {
+            errEl = document.createElement('div');
+            errEl.className = 'field-error';
+            field.parentElement.appendChild(errEl);
+        }
+        errEl.innerHTML = `${errorIcon} ${msg}`;
+    }
+
+    function clearFieldError(field) {
+        field.classList.remove('error-state');
+        const errEl = field.parentElement.querySelector('.field-error');
+        if (errEl) errEl.remove();
+    }
+
+    function validateField(field) {
+        // Sur input : on efface juste l'erreur si le champ devient valide, jamais on en ajoute
+        const config = fieldConfig[field.id];
+        if (!config) return;
+        const val = field.value.trim();
+        if (config.validate(val)) {
+            clearFieldError(field);
+        }
+    }
+
+    function validateFieldOnBlur(field) {
+        // Sur blur : erreur même si vide
+        const config = fieldConfig[field.id];
+        if (!config) return;
+        const val = field.value.trim();
+        if (val === '') {
+            showFieldError(field, config.empty);
+        } else if (!config.validate(val)) {
+            showFieldError(field, config.invalid);
+        } else {
+            clearFieldError(field);
+        }
+    }
+
+    Object.keys(fieldConfig).forEach(id => {
+        const field = document.getElementById(id);
+        if (!field) return;
+        field.addEventListener('input', () => { validateField(field); checkValidity(); });
+        field.addEventListener('blur', () => { validateFieldOnBlur(field); checkValidity(); });
+    });
+
+    wrapper.addEventListener('click', async function (e) {
+        e.preventDefault();
+
+        // Si invalide → forcer l'affichage de toutes les erreurs
+        if (btn.classList.contains('disabled')) return;
+
+        btn.classList.add('disabled');
+        btn.style.pointerEvents = 'none';
+        btn.innerHTML = 'Envoi en cours...';
+
+        try {
+            let fileLinks = '';
+            if (selectedFiles.length > 0) {
+                const urls = await Promise.all(selectedFiles.map(file => uploadToCloudinary(file)));
+                fileLinks = '\n\n📎 Fichiers joints :\n' + urls.map((url, i) => `${i + 1}. ${selectedFiles[i].name} : ${url}`).join('\n');
+            }
+
+            const form = document.querySelector('.email-section');
+            const formData = new FormData(form);
+            formData.delete('attachment');
+            formData.set('message', formData.get('message') + fileLinks);
+
+            const response = await fetch(form.action, { method: 'POST', body: formData });
+
+            if (response.ok) {
+                if (overlay) overlay.classList.add('visible');
+                contactForm.querySelectorAll('input, textarea').forEach(input => {
+                    input.value = '';
+                    if (input.type === 'file') input.value = null;
+                });
+                selectedFiles = [];
+                if (uploadedArea) uploadedArea.innerHTML = '';
+                setTimeout(() => { if (overlay) overlay.classList.remove('visible'); }, 3000);
+            } else {
+                alert('Erreur lors de l\'envoi.');
+            }
+        } catch (error) {
+            alert('Erreur: ' + error.message);
+        } finally {
+            btn.innerHTML = btnOriginalHTML;
+            checkValidity();
+        }
+    });
+
+    checkValidity();
+
+}); // ← fin DOMContentLoaded
+
 // Menu hamburger
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const navbar = document.getElementById('navbar');
@@ -58,22 +304,22 @@ function lerp(a, b, t) {
 }
 
 function animate() {
-  const rect = envelopeContact.getBoundingClientRect();
-  const raw = -rect.top * 0.06;
+    const rect = envelopeContact.getBoundingClientRect();
+    const raw = -rect.top * 0.04; /* Ajuste le facteur pour plus ou moins de décalage */
 
   // Distance entre le bas du wrapper et le haut du footer
-  const envelopeBottom = envelopeContact.getBoundingClientRect().bottom;
-  const footerTop = footer.getBoundingClientRect().top;
-  const distanceToFooter = footerTop - envelopeBottom;
+    const envelopeBottom = envelopeContact.getBoundingClientRect().bottom;
+    const footerTop = footer.getBoundingClientRect().top;
+    const distanceToFooter = footerTop - envelopeBottom;
 
-  // On arrête de descendre quand on approche du footer
-  const maxShift = Math.max(0, raw - Math.min(0, distanceToFooter - 20));
-  targetShift = Math.min(raw, maxShift);
+    // On arrête de descendre quand on approche du footer
+    const maxShift = Math.max(0, raw - Math.min(0, distanceToFooter - 20)); /* 20px de marge avant le footer */
+    targetShift = Math.min(raw, maxShift);
 
-  currentShift = lerp(currentShift, targetShift, 0.08);
-  envelopeOverlay.style.transform = `translateY(${currentShift}px)`;
+    currentShift = lerp(currentShift, targetShift, 0.08); /* Ajuste le facteur pour la vitesse de l'animation */
+    envelopeOverlay.style.transform = `translateY(${currentShift}px)`;
 
-  requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
 }
 
 animate();
@@ -272,242 +518,3 @@ function genererPagination() {
 
 // Initialisation
 afficherPage(1);
-
-// =============================================
-// FICHIERS
-// =============================================
-const fileInput = document.getElementById('attachment');
-const uploadedArea = document.querySelector('.uploaded-area');
-let selectedFiles = [];
-
-const fileSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="32" viewBox="0 0 44 59" fill="none">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="M25.6667 0H5.5C4.04131 0 2.64236 0.579462 1.61091 1.61091C0.579462 2.64236 0 4.04131 0 5.5V53.1667C0 54.6254 0.579462 56.0243 1.61091 57.0558C2.64236 58.0872 4.04131 58.6667 5.5 58.6667H38.5C39.9587 58.6667 41.3576 58.0872 42.3891 57.0558C43.4205 56.0243 44 54.6254 44 53.1667V18.3333H43.9853L25.6667 0ZM22 5.88133V21.0833C22 21.5893 22.4107 22 22.9167 22H38.1223C38.3036 21.9996 38.4806 21.9455 38.6311 21.8445C38.7816 21.7435 38.8987 21.6002 38.9678 21.4327C39.0369 21.2651 39.0547 21.0808 39.0191 20.9032C38.9835 20.7255 38.896 20.5623 38.7677 20.4343L23.5657 5.23233C23.4375 5.1038 23.274 5.01624 23.096 4.98073C22.9179 4.94522 22.7334 4.96338 22.5657 5.0329C22.3979 5.10241 22.2547 5.22016 22.154 5.3712C22.0533 5.52225 21.9997 5.6998 22 5.88133Z" fill="#472952"/>
-</svg>`;
-
-const deleteSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" style="cursor:pointer; flex-shrink:0;">
-    <path d="M18 6L6 18M6 6l12 12" stroke="#A077AF" stroke-width="2" stroke-linecap="round"/>
-</svg>`;
-
-if (fileInput) {
-    fileInput.addEventListener('change', function () {
-        const newFiles = Array.from(this.files);
-        newFiles.forEach(newFile => {
-            const alreadyExists = selectedFiles.some(f => f.name === newFile.name && f.size === newFile.size);
-            if (!alreadyExists) selectedFiles.push(newFile);
-        });
-        renderFiles();
-    });
-}
-
-function renderFiles() {
-    uploadedArea.innerHTML = '';
-
-    const dt = new DataTransfer();
-    selectedFiles.forEach(file => dt.items.add(file));
-    fileInput.files = dt.files;
-
-    selectedFiles.forEach((file, index) => {
-        let fileName = file.name;
-        if (fileName.length >= 20) {
-            const splitName = fileName.split('.');
-            fileName = splitName[0].substring(0, 13) + '... .' + splitName[splitName.length - 1];
-        }
-
-        const fileSize = file.size < 1024 * 1024
-            ? Math.floor(file.size / 1024) + ' KB'
-            : (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-
-        const li = document.createElement('li');
-        li.classList.add('row');
-        li.innerHTML = `
-            <div class="content">
-                ${fileSVG}
-                <div class="details">
-                    <span class="name">${fileName}</span>
-                    <span class="size">${fileSize}</span>
-                </div>
-            </div>
-            ${deleteSVG}
-        `;
-
-        li.querySelector('svg:last-child').addEventListener('click', () => {
-            selectedFiles.splice(index, 1);
-            renderFiles();
-        });
-
-        uploadedArea.appendChild(li);
-    });
-}
-
-// =============================================
-// CLOUDINARY — upload fichier → URL
-// =============================================
-async function uploadToCloudinary(file) {
-    const cloudName = 'dckex6rbv';
-    const uploadPreset = 'uqamicus_uploads';
-
-    const data = new FormData();
-    data.append('file', file);
-    data.append('upload_preset', uploadPreset);
-
-    const response = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`, {
-        method: 'POST',
-        body: data,
-    });
-
-    if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error?.message || 'Cloudinary upload failed');
-    }
-
-    const result = await response.json();
-    return result.secure_url;
-}
-
-// =============================================
-// FORMULAIRE — soumission Web3Forms + overlay
-// =============================================
-(function () {
-    const contactForm = document.querySelector('.contact-form');
-    if (!contactForm) return;
-
-    const overlay = document.getElementById('formSuccessOverlay');
-    const wrapper = document.querySelector('.submit-wrapper');
-    const btn = contactForm.querySelector('button');
-    const requiredFields = contactForm.querySelectorAll('[required]');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const btnOriginalHTML = btn.innerHTML;
-
-    const fieldConfig = {
-        'full-name': {
-            empty: 'Veuillez entrer votre nom complet.',
-            invalid: 'Le nom doit contenir au moins 2 caractères sans chiffres.',
-            validate: val => val.length >= 2 && !/\d/.test(val)
-        },
-        'email': {
-            empty: 'Veuillez entrer votre adresse courriel.',
-            invalid: 'Format de courriel invalide (ex: nom@domaine.com).',
-            validate: val => emailRegex.test(val)
-        },
-        'subject': {
-            empty: 'Veuillez entrer un sujet.',
-            invalid: 'Le sujet doit contenir au moins 5 caractères.',
-            validate: val => val.length >= 5
-        },
-        'message': {
-            empty: 'Veuillez écrire votre message.',
-            invalid: 'Le message doit contenir au moins 20 caractères.',
-            validate: val => val.length >= 20
-        },
-    };
-
-    const errorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="none" style="flex-shrink:0"><circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-width="1.2"/><path d="M8 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="11" r=".8" fill="currentColor"/></svg>`;
-
-    function checkValidity() {
-        const allValid = Array.from(requiredFields).every(field => {
-            if (field.type === 'file') return true;
-            const config = fieldConfig[field.id];
-            if (!config) return field.value.trim() !== '';
-            return config.validate(field.value.trim());
-        });
-
-        if (allValid) {
-            btn.classList.remove('disabled');
-            btn.style.pointerEvents = 'auto';
-            wrapper.classList.remove('form-invalid');
-        } else {
-            btn.classList.add('disabled');
-            btn.style.pointerEvents = 'none';
-            wrapper.classList.add('form-invalid');
-        }
-    }
-
-    function showFieldError(field, msg) {
-        field.classList.add('error-state');
-        let errEl = field.parentElement.querySelector('.field-error');
-        if (!errEl) {
-            errEl = document.createElement('div');
-            errEl.className = 'field-error';
-            field.parentElement.appendChild(errEl);
-        }
-        errEl.innerHTML = `${errorIcon} ${msg}`;
-    }
-
-    function clearFieldError(field) {
-        field.classList.remove('error-state');
-        const errEl = field.parentElement.querySelector('.field-error');
-        if (errEl) errEl.remove();
-    }
-
-    Object.keys(fieldConfig).forEach(id => {
-        const field = document.getElementById(id);
-        if (!field) return;
-
-        field.addEventListener('input', () => {
-            const config = fieldConfig[field.id];
-            if (field.value.trim() !== '' && !config.validate(field.value.trim())) {
-                showFieldError(field, config.invalid);
-            } else {
-                clearFieldError(field);
-            }
-            checkValidity();
-        });
-
-        field.addEventListener('blur', () => {
-            const config = fieldConfig[field.id];
-            if (field.value.trim() === '') {
-                showFieldError(field, config.empty);
-            } else if (!config.validate(field.value.trim())) {
-                showFieldError(field, config.invalid);
-            }
-            checkValidity();
-        });
-    });
-
-    wrapper.addEventListener('click', async function (e) {
-        e.preventDefault();
-        if (btn.classList.contains('disabled')) return;
-
-        btn.classList.add('disabled');
-        btn.style.pointerEvents = 'none';
-        btn.innerHTML = 'Envoi en cours...';
-
-        try {
-            let fileLinks = '';
-            if (selectedFiles.length > 0) {
-                const urls = await Promise.all(selectedFiles.map(file => uploadToCloudinary(file)));
-                fileLinks = '\n\n📎 Fichiers joints :\n' + urls.map((url, i) => `${i + 1}. ${selectedFiles[i].name} : ${url}`).join('\n');
-            }
-
-            const form = document.querySelector('.email-section');
-            const formData = new FormData(form);
-            formData.delete('attachment');
-            formData.set('message', formData.get('message') + fileLinks);
-
-            const response = await fetch(form.action, {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                if (overlay) overlay.classList.add('visible');
-                contactForm.querySelectorAll('input, textarea').forEach(input => {
-                    input.value = '';
-                    if (input.type === 'file') input.value = null;
-                });
-                selectedFiles = [];
-                if (uploadedArea) uploadedArea.innerHTML = '';
-                setTimeout(() => { if (overlay) overlay.classList.remove('visible'); }, 3000);
-            } else {
-                alert('Erreur lors de l\'envoi.');
-            }
-        } catch (error) {
-            alert('Erreur: ' + error.message);
-        } finally {
-            btn.innerHTML = btnOriginalHTML;
-            checkValidity();
-        }
-    });
-
-    checkValidity();
-})();

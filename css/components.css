@@ -276,7 +276,7 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     display: flex; align-items: center; justify-content: center; gap: 10px;
     border-radius: var(--radius-btn); max-width: 260px; height: 65px; padding: 20px 25px;
     color: #FFF; font-size: 25px; font-weight: 700; margin: 0 auto;
-    cursor: pointer; transition: transform var(--transition-base);
+    cursor: pointer; transition: transform var(--transition-base); position: relative;
 }
 .contact-form button:hover { transform: scale(1.03); background: linear-gradient(270deg, rgba(238,238,238,0.20) 0%, rgba(250,239,255,0.20) 100%), var(--grad-bleu); }
 .contact-form button.disabled { pointer-events: none; }
@@ -299,9 +299,8 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .form-success-overlay.visible { display: flex !important; animation: fadeInThenOut 3s ease forwards; }
 @keyframes fadeInThenOut { 0%, 100% { opacity: 0; } 10%, 90% { opacity: 1; pointer-events: auto; } }
 
-.form-success-overlay .success-title { font-size: 35px; background: var(--grad-bleu); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.form-success-overlay .success-subtitle { font-size: 25px; color: var(--bleu-moyen); -webkit-text-stroke: 2px var(--bleu-fonce); }
-
+.form-success-overlay .success-title { font-size: 35px; background: var(--grad-bleu); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; }
+.form-success-overlay .success-subtitle { font-size: 25px; font-weight: 500; color: var(--bleu-fonce); }
 .contact-input input.error-state, .contact-input textarea.error-state { outline: 2px solid #E24B4A; }
 .field-error { display: flex; align-items: center; gap: 6px; margin-top: 6px; color: #A32D2D; font-size: 13px; font-weight: 500; }
 .form-error-banner { display: none; align-items: flex-start; gap: 10px; border-radius: var(--radius-btn); padding: 14px 18px; font-size: 14px; font-weight: 500; margin-top: 16px; }
@@ -317,15 +316,15 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     margin: 0 auto;
     border-radius: var(--radius-box);
     overflow: visible;
-  }
-  
-  .envelope-form-area {
+}
+
+.envelope-form-area {
     position: relative;
     z-index: 1;
     padding: 0px 10.4% 250px; /* padding-bottom laisse de la place pour le SVG */
-  }
-  
-  .envelope-overlay {
+}
+
+.envelope-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -334,13 +333,13 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     pointer-events: none; /* le form reste cliquable en dessous */
     line-height: 0;
     will-change: transform;
-  }
-  
-  .envelope-overlay svg {
+}
+
+.envelope-overlay svg {
     width: 100%;
     height: auto;
     display: block;
-  }
+}
 
 /* ── Responsive ──────────────────────────────────────────── */
 @media (max-width: 1200px) {
