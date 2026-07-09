@@ -91,240 +91,324 @@ document.addEventListener('DOMContentLoaded', () => {
     // FORMULAIRE
     // =============================================
     const contactForm = document.querySelector('.contact-form');
-    if (!contactForm) return;
+    if (contactForm) {
+        const overlay = document.getElementById('formSuccessOverlay');
+        const wrapper = document.querySelector('.submit-wrapper');
+        const btn = contactForm.querySelector('button');
+        const requiredFields = contactForm.querySelectorAll('[required]');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const btnOriginalHTML = btn.innerHTML;
 
-    const overlay = document.getElementById('formSuccessOverlay');
-    const wrapper = document.querySelector('.submit-wrapper');
-    const btn = contactForm.querySelector('button');
-    const requiredFields = contactForm.querySelectorAll('[required]');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const btnOriginalHTML = btn.innerHTML;
+        const errorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="none" style="flex-shrink:0">
+            <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M8 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="8" cy="11" r=".8" fill="currentColor"/>
+        </svg>`;
 
-    const errorIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="none" style="flex-shrink:0">
-        <circle cx="8" cy="8" r="7.5" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M8 4.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="8" cy="11" r=".8" fill="currentColor"/>
-    </svg>`;
+        const fieldConfig = {
+            'full-name': {
+                empty: 'Veuillez entrer votre nom complet.',
+                invalid: 'Le nom doit contenir au moins 2 caractères sans chiffres.',
+                validate: val => val.length >= 2 && !/\d/.test(val)
+            },
+            'email': {
+                empty: 'Veuillez entrer votre adresse courriel.',
+                invalid: 'Format de courriel invalide (ex: nom@domaine.com).',
+                validate: val => emailRegex.test(val)
+            },
+            'subject': {
+                empty: 'Veuillez entrer un sujet.',
+                invalid: 'Le sujet doit contenir au moins 5 caractères.',
+                validate: val => val.length >= 5
+            },
+            'message': {
+                empty: 'Veuillez écrire votre message.',
+                invalid: 'Le message doit contenir au moins 20 caractères.',
+                validate: val => val.length >= 20
+            },
+        };
 
-    const fieldConfig = {
-        'full-name': {
-            empty: 'Veuillez entrer votre nom complet.',
-            invalid: 'Le nom doit contenir au moins 2 caractères sans chiffres.',
-            validate: val => val.length >= 2 && !/\d/.test(val)
-        },
-        'email': {
-            empty: 'Veuillez entrer votre adresse courriel.',
-            invalid: 'Format de courriel invalide (ex: nom@domaine.com).',
-            validate: val => emailRegex.test(val)
-        },
-        'subject': {
-            empty: 'Veuillez entrer un sujet.',
-            invalid: 'Le sujet doit contenir au moins 5 caractères.',
-            validate: val => val.length >= 5
-        },
-        'message': {
-            empty: 'Veuillez écrire votre message.',
-            invalid: 'Le message doit contenir au moins 20 caractères.',
-            validate: val => val.length >= 20
-        },
-    };
+        function checkValidity() {
+            const allValid = Array.from(requiredFields).every(field => {
+                if (field.type === 'file') return true;
+                const config = fieldConfig[field.id];
+                if (!config) return field.value.trim() !== '';
+                return config.validate(field.value.trim());
+            });
 
-    function checkValidity() {
-        const allValid = Array.from(requiredFields).every(field => {
-            if (field.type === 'file') return true;
+            if (allValid) {
+                btn.classList.remove('disabled');
+                btn.style.pointerEvents = 'auto';
+                wrapper.classList.remove('form-invalid');
+            } else {
+                btn.classList.add('disabled');
+                btn.style.pointerEvents = 'none';
+                wrapper.classList.add('form-invalid');
+            }
+        }
+
+        function showFieldError(field, msg) {
+            field.classList.add('error-state');
+            let errEl = field.parentElement.querySelector('.field-error');
+            if (!errEl) {
+                errEl = document.createElement('div');
+                errEl.className = 'field-error';
+                field.parentElement.appendChild(errEl);
+            }
+            errEl.innerHTML = `${errorIcon} ${msg}`;
+        }
+
+        function clearFieldError(field) {
+            field.classList.remove('error-state');
+            const errEl = field.parentElement.querySelector('.field-error');
+            if (errEl) errEl.remove();
+        }
+
+        function validateField(field) {
             const config = fieldConfig[field.id];
-            if (!config) return field.value.trim() !== '';
-            return config.validate(field.value.trim());
+            if (!config) return;
+            const val = field.value.trim();
+            if (config.validate(val)) {
+                clearFieldError(field);
+            }
+        }
+
+        function validateFieldOnBlur(field) {
+            const config = fieldConfig[field.id];
+            if (!config) return;
+            const val = field.value.trim();
+            if (val === '') {
+                showFieldError(field, config.empty);
+            } else if (!config.validate(val)) {
+                showFieldError(field, config.invalid);
+            } else {
+                clearFieldError(field);
+            }
+        }
+
+        Object.keys(fieldConfig).forEach(id => {
+            const field = document.getElementById(id);
+            if (!field) return;
+            field.addEventListener('input', () => { validateField(field); checkValidity(); });
+            field.addEventListener('blur', () => { validateFieldOnBlur(field); checkValidity(); });
         });
 
-        if (allValid) {
-            btn.classList.remove('disabled');
-            btn.style.pointerEvents = 'auto';
-            wrapper.classList.remove('form-invalid');
-        } else {
+        wrapper.addEventListener('click', async function (e) {
+            e.preventDefault();
+            if (btn.classList.contains('disabled')) return;
+
             btn.classList.add('disabled');
             btn.style.pointerEvents = 'none';
-            wrapper.classList.add('form-invalid');
-        }
-    }
+            btn.innerHTML = 'Envoi en cours...';
 
-    function showFieldError(field, msg) {
-        field.classList.add('error-state');
-        let errEl = field.parentElement.querySelector('.field-error');
-        if (!errEl) {
-            errEl = document.createElement('div');
-            errEl.className = 'field-error';
-            field.parentElement.appendChild(errEl);
-        }
-        errEl.innerHTML = `${errorIcon} ${msg}`;
-    }
+            try {
+                let fileLinks = '';
+                if (selectedFiles.length > 0) {
+                    const urls = await Promise.all(selectedFiles.map(file => uploadToCloudinary(file)));
+                    fileLinks = '\n\n📎 Fichiers joints :\n' + urls.map((url, i) => `${i + 1}. ${selectedFiles[i].name} : ${url}`).join('\n');
+                }
 
-    function clearFieldError(field) {
-        field.classList.remove('error-state');
-        const errEl = field.parentElement.querySelector('.field-error');
-        if (errEl) errEl.remove();
-    }
+                const form = document.querySelector('.email-section');
+                const formData = new FormData(form);
+                formData.delete('attachment');
+                formData.set('message', formData.get('message') + fileLinks);
 
-    function validateField(field) {
-        // Sur input : on efface juste l'erreur si le champ devient valide, jamais on en ajoute
-        const config = fieldConfig[field.id];
-        if (!config) return;
-        const val = field.value.trim();
-        if (config.validate(val)) {
-            clearFieldError(field);
-        }
-    }
+                const response = await fetch(form.action, { method: 'POST', body: formData });
 
-    function validateFieldOnBlur(field) {
-        // Sur blur : erreur même si vide
-        const config = fieldConfig[field.id];
-        if (!config) return;
-        const val = field.value.trim();
-        if (val === '') {
-            showFieldError(field, config.empty);
-        } else if (!config.validate(val)) {
-            showFieldError(field, config.invalid);
-        } else {
-            clearFieldError(field);
-        }
-    }
-
-    Object.keys(fieldConfig).forEach(id => {
-        const field = document.getElementById(id);
-        if (!field) return;
-        field.addEventListener('input', () => { validateField(field); checkValidity(); });
-        field.addEventListener('blur', () => { validateFieldOnBlur(field); checkValidity(); });
-    });
-
-    wrapper.addEventListener('click', async function (e) {
-        e.preventDefault();
-
-        // Si invalide → forcer l'affichage de toutes les erreurs
-        if (btn.classList.contains('disabled')) return;
-
-        btn.classList.add('disabled');
-        btn.style.pointerEvents = 'none';
-        btn.innerHTML = 'Envoi en cours...';
-
-        try {
-            let fileLinks = '';
-            if (selectedFiles.length > 0) {
-                const urls = await Promise.all(selectedFiles.map(file => uploadToCloudinary(file)));
-                fileLinks = '\n\n📎 Fichiers joints :\n' + urls.map((url, i) => `${i + 1}. ${selectedFiles[i].name} : ${url}`).join('\n');
+                if (response.ok) {
+                    if (overlay) overlay.classList.add('visible');
+                    contactForm.querySelectorAll('input, textarea').forEach(input => {
+                        input.value = '';
+                        if (input.type === 'file') input.value = null;
+                    });
+                    selectedFiles = [];
+                    if (uploadedArea) uploadedArea.innerHTML = '';
+                    setTimeout(() => { if (overlay) overlay.classList.remove('visible'); }, 3000);
+                } else {
+                    alert('Erreur lors de l\'envoi.');
+                }
+            } catch (error) {
+                alert('Erreur: ' + error.message);
+            } finally {
+                btn.innerHTML = btnOriginalHTML;
+                checkValidity();
             }
+        });
 
-            const form = document.querySelector('.email-section');
-            const formData = new FormData(form);
-            formData.delete('attachment');
-            formData.set('message', formData.get('message') + fileLinks);
+        checkValidity();
+    }
 
-            const response = await fetch(form.action, { method: 'POST', body: formData });
+    // =============================================
+    // PAGINATION
+    // =============================================
+    const ARTICLES_PAR_PAGE = 6;
+    const articles = document.querySelectorAll('#articles-container .article-card');
+    const pagination = document.getElementById('pagination');
+    let pageCourante = 1;
 
-            if (response.ok) {
-                if (overlay) overlay.classList.add('visible');
-                contactForm.querySelectorAll('input, textarea').forEach(input => {
-                    input.value = '';
-                    if (input.type === 'file') input.value = null;
-                });
-                selectedFiles = [];
-                if (uploadedArea) uploadedArea.innerHTML = '';
-                setTimeout(() => { if (overlay) overlay.classList.remove('visible'); }, 3000);
-            } else {
-                alert('Erreur lors de l\'envoi.');
-            }
-        } catch (error) {
-            alert('Erreur: ' + error.message);
-        } finally {
-            btn.innerHTML = btnOriginalHTML;
-            checkValidity();
+    function afficherPage(page) {
+        const debut = (page - 1) * ARTICLES_PAR_PAGE;
+        const fin = debut + ARTICLES_PAR_PAGE;
+        articles.forEach((article, index) => {
+            article.style.display = (index >= debut && index < fin) ? '' : 'none';
+        });
+        pageCourante = page;
+        genererPagination();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function creerFleche(direction) {
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('width', '10');
+        svg.setAttribute('height', '17');
+        svg.setAttribute('viewBox', '0 0 10 17');
+        svg.setAttribute('fill', 'none');
+        svg.style.cursor = 'pointer';
+
+        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        path.setAttribute('d', direction === 'gauche'
+            ? 'M8.0437 15.0875L0.999951 8.04375L8.0437 1'
+            : 'M1 15.0875L8.04375 8.04375L1 1'
+        );
+        path.setAttribute('stroke', '#00508F');
+        path.setAttribute('stroke-width', '2');
+        path.setAttribute('stroke-linecap', 'round');
+        path.setAttribute('stroke-linejoin', 'round');
+        svg.appendChild(path);
+        return svg;
+    }
+
+    function genererPagination() {
+        const totalPages = Math.ceil(articles.length / ARTICLES_PAR_PAGE);
+        pagination.innerHTML = '';
+
+        const flecheGauche = creerFleche('gauche');
+        flecheGauche.style.opacity = pageCourante > 1 ? '1' : '0.3';
+        flecheGauche.style.cursor = pageCourante > 1 ? 'pointer' : 'default';
+        if (pageCourante > 1) {
+            flecheGauche.addEventListener('click', () => afficherPage(pageCourante - 1));
         }
-    });
+        pagination.appendChild(flecheGauche);
 
-    checkValidity();
+        for (let i = 1; i <= totalPages; i++) {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.className = 'pagination-link' + (i === pageCourante ? ' pagination-active' : '');
+            a.textContent = i;
+            a.addEventListener('click', (e) => {
+                e.preventDefault();
+                afficherPage(i);
+            });
+            pagination.appendChild(a);
+        }
+
+        const flecheDroite = creerFleche('droite');
+        flecheDroite.style.opacity = pageCourante < totalPages ? '1' : '0.3';
+        flecheDroite.style.cursor = pageCourante < totalPages ? 'pointer' : 'default';
+        if (pageCourante < totalPages) {
+            flecheDroite.addEventListener('click', () => afficherPage(pageCourante + 1));
+        }
+        pagination.appendChild(flecheDroite);
+    }
+
+    if (pagination) afficherPage(1);
 
 }); // ← fin DOMContentLoaded
 
-// Menu hamburger
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const navbar = document.getElementById('navbar');
-hamburgerBtn.addEventListener('click', () => {
-    // Bascule la classe "active" sur le parent nav
-    navbar.classList.toggle('active');
+
+// =============================================
+// MENU HAMBURGER
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const navbar = document.getElementById('navbar');
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', () => {
+            navbar.classList.toggle('active');
+        });
+    }
+
+    // Scroll indicator
+    const scrollIcon = document.querySelector('.scroll-indicator');
+    if (scrollIcon) {
+        window.addEventListener('scroll', () => {
+            scrollIcon.style.opacity = window.scrollY > 50 ? '0' : '1';
+        });
+    }
 });
 
-// Afficher et cacher l'en-tête quand on scroll down et up, mais garde l'en-tête visible tout en haut de la page
+
+// =============================================
+// HEADER HIDE/SHOW ON SCROLL
+// =============================================
 let lastScrollY = window.scrollY;
 window.addEventListener('scroll', () => {
     const currentScrollY = window.scrollY;
+    const header = document.getElementById('main-header');
+    if (!header) return;
 
     if (currentScrollY <= 0) {
-        // Tout en haut → toujours visible
-        document.getElementById('main-header').classList.remove('header-hidden');
+        header.classList.remove('header-hidden');
     } else if (currentScrollY < lastScrollY) {
-        // Scroll vers le haut → on montre
-        document.getElementById('main-header').classList.remove('header-hidden');
+        header.classList.remove('header-hidden');
     } else {
-        // Scroll vers le bas → on cache
-        document.getElementById('main-header').classList.add('header-hidden');
+        header.classList.add('header-hidden');
     }
-
     lastScrollY = currentScrollY;
 });
 
+
+// =============================================
+// SCROLL ANIMATIONS
+// =============================================
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            observer.unobserve(entry.target); // animation une seule fois
+            observer.unobserve(entry.target);
         }
     });
 }, { threshold: 0.15 });
 
-//Animation de scroll sur tous les éléments qui fade in et show up
-document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
-window.addEventListener('scroll', () => {
-    const scrollIcon = document.querySelector('.scroll-indicator');
-    if (window.scrollY > 50) {
-        scrollIcon.style.opacity = '0';
-    } else {
-        scrollIcon.style.opacity = '1';
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.scroll-anim').forEach(el => observer.observe(el));
 });
 
-//Enveloppe effet parallax
-const envelopeOverlay = document.querySelector('.envelope-overlay');
-const envelopeContact = document.querySelector('.envelope-contact');
-const footer = document.querySelector('footer'); // adapte le sélecteur si besoin
 
-let currentShift = 0;
-let targetShift = 0;
+// =============================================
+// ENVELOPPE EFFET PARALLAX
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+    const envelopeOverlay = document.querySelector('.envelope-overlay');
+    const envelopeContact = document.querySelector('.envelope-contact');
+    const footer = document.querySelector('footer');
+    if (!envelopeOverlay || !envelopeContact || !footer) return;
 
-function lerp(a, b, t) {
-  return a + (b - a) * t;
-}
+    let currentShift = 0;
+    let targetShift = 0;
 
-function animate() {
-    const rect = envelopeContact.getBoundingClientRect();
-    const raw = -rect.top * 0.04; /* Ajuste le facteur pour plus ou moins de décalage */
+    function lerp(a, b, t) { return a + (b - a) * t; }
 
-  // Distance entre le bas du wrapper et le haut du footer
-    const envelopeBottom = envelopeContact.getBoundingClientRect().bottom;
-    const footerTop = footer.getBoundingClientRect().top;
-    const distanceToFooter = footerTop - envelopeBottom;
+    function animate() {
+        const rect = envelopeContact.getBoundingClientRect();
+        const raw = -rect.top * 0.04;
+        const envelopeBottom = envelopeContact.getBoundingClientRect().bottom;
+        const footerTop = footer.getBoundingClientRect().top;
+        const distanceToFooter = footerTop - envelopeBottom;
+        const maxShift = Math.max(0, raw - Math.min(0, distanceToFooter - 20));
+        targetShift = Math.min(raw, maxShift);
+        currentShift = lerp(currentShift, targetShift, 0.08);
+        envelopeOverlay.style.transform = `translateY(${currentShift}px)`;
+        requestAnimationFrame(animate);
+    }
 
-    // On arrête de descendre quand on approche du footer
-    const maxShift = Math.max(0, raw - Math.min(0, distanceToFooter - 20)); /* 20px de marge avant le footer */
-    targetShift = Math.min(raw, maxShift);
+    animate();
+});
 
-    currentShift = lerp(currentShift, targetShift, 0.08); /* Ajuste le facteur pour la vitesse de l'animation */
-    envelopeOverlay.style.transform = `translateY(${currentShift}px)`;
 
-    requestAnimationFrame(animate);
-}
-
-animate();
-
-//Audio Podcast
+// =============================================
+// AUDIO PODCAST
+// =============================================
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('audio[id^="audio"]').forEach(audio => {
         const num = audio.id.replace('audio', '');
@@ -334,7 +418,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const volumeSlider = document.getElementById('volumeSlider' + num);
         initProgressBar(audio.id);
 
-        // Durée
         const setDuration = () => {
             if (audio.duration && !isNaN(audio.duration)) {
                 durationEl.textContent = formatTime(audio.duration);
@@ -344,14 +427,12 @@ document.addEventListener('DOMContentLoaded', () => {
         audio.addEventListener('durationchange', setDuration);
         if (audio.readyState >= 1) setDuration();
 
-        // Progression
         audio.addEventListener('timeupdate', () => {
             const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
             progressBar.style.width = pct + '%';
             currentTimeEl.textContent = formatTime(audio.currentTime);
         });
 
-        // Fin
         audio.addEventListener('ended', () => {
             document.getElementById('playBtn' + num).querySelector('.play-icon').style.display = 'block';
             document.getElementById('playBtn' + num).querySelector('.pause-icon').style.display = 'none';
@@ -359,7 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTimeEl.textContent = '0:00';
         });
 
-        // Volume slider — attaché ici directement
         if (volumeSlider) {
             volumeSlider.addEventListener('input', () => {
                 audio.volume = parseFloat(volumeSlider.value);
@@ -374,7 +454,6 @@ function togglePlay(audioId) {
     const num = audioId.replace('audio', '');
     const playIcon = document.getElementById('playBtn' + num).querySelector('.play-icon');
     const pauseIcon = document.getElementById('playBtn' + num).querySelector('.pause-icon');
-
     if (audio.paused) {
         audio.play();
         playIcon.style.display = 'none';
@@ -399,12 +478,9 @@ function initProgressBar(audioId) {
         if (audio.duration) audio.currentTime = pct * audio.duration;
     }
 
-    // Souris
     bar.addEventListener('mousedown', (e) => { isDragging = true; seek(e); });
     document.addEventListener('mousemove', (e) => { if (isDragging) seek(e); });
     document.addEventListener('mouseup', () => { isDragging = false; });
-
-    // Tactile
     bar.addEventListener('touchstart', (e) => { isDragging = true; seek(e); }, { passive: true });
     document.addEventListener('touchmove', (e) => { if (isDragging) seek(e); }, { passive: true });
     document.addEventListener('touchend', () => { isDragging = false; });
@@ -415,7 +491,6 @@ function toggleMute(audioId) {
     const num = audioId.replace('audio', '');
     const slider = document.getElementById('volumeSlider' + num);
     const btn = document.getElementById('volumeBtn' + num);
-
     audio.muted = !audio.muted;
     if (slider) slider.value = audio.muted ? 0 : audio.volume;
     btn.querySelector('.vol-on').style.display  = audio.muted ? 'none'  : 'block';
@@ -438,83 +513,3 @@ function formatTime(secs) {
     const s = Math.floor(secs % 60).toString().padStart(2, '0');
     return `${m}:${s}`;
 }
-
-// Pagination
-const ARTICLES_PAR_PAGE = 6;
-const articles = document.querySelectorAll('#articles-container .article-card');
-const pagination = document.getElementById('pagination');
-let pageCourante = 1;
-
-function afficherPage(page) {
-    const debut = (page - 1) * ARTICLES_PAR_PAGE;
-    const fin = debut + ARTICLES_PAR_PAGE;
-
-    articles.forEach((article, index) => {
-        article.style.display = (index >= debut && index < fin) ? '' : 'none';
-    });
-
-    pageCourante = page;
-    genererPagination();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function creerFleche(direction) {
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', '10');
-    svg.setAttribute('height', '17');
-    svg.setAttribute('viewBox', '0 0 10 17');
-    svg.setAttribute('fill', 'none');
-    svg.style.cursor = 'pointer';
-
-    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    path.setAttribute('d', direction === 'gauche'
-        ? 'M8.0437 15.0875L0.999951 8.04375L8.0437 1'
-        : 'M1 15.0875L8.04375 8.04375L1 1'
-    );
-    path.setAttribute('stroke', '#00508F');
-    path.setAttribute('stroke-width', '2');
-    path.setAttribute('stroke-linecap', 'round');
-    path.setAttribute('stroke-linejoin', 'round');
-
-    svg.appendChild(path);
-    return svg;
-}
-
-function genererPagination() {
-    const totalPages = Math.ceil(articles.length / ARTICLES_PAR_PAGE);
-    pagination.innerHTML = '';
-
-    // Flèche gauche
-    const flecheGauche = creerFleche('gauche');
-    flecheGauche.style.opacity = pageCourante > 1 ? '1' : '0.3';
-    flecheGauche.style.cursor = pageCourante > 1 ? 'pointer' : 'default';
-    if (pageCourante > 1) {
-        flecheGauche.addEventListener('click', () => afficherPage(pageCourante - 1));
-    }
-    pagination.appendChild(flecheGauche);
-
-    // Numéros de page
-    for (let i = 1; i <= totalPages; i++) {
-        const a = document.createElement('a');
-        a.href = '#';
-        a.className = 'pagination-link' + (i === pageCourante ? ' pagination-active' : '');
-        a.textContent = i;
-        a.addEventListener('click', (e) => {
-            e.preventDefault();
-            afficherPage(i);
-        });
-        pagination.appendChild(a);
-    }
-
-    // Flèche droite
-    const flecheDroite = creerFleche('droite');
-    flecheDroite.style.opacity = pageCourante < totalPages ? '1' : '0.3';
-    flecheDroite.style.cursor = pageCourante < totalPages ? 'pointer' : 'default';
-    if (pageCourante < totalPages) {
-        flecheDroite.addEventListener('click', () => afficherPage(pageCourante + 1));
-    }
-    pagination.appendChild(flecheDroite);
-}
-
-// Initialisation
-afficherPage(1);
