@@ -321,6 +321,127 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Épisode 2 -->
+                <div class="podcast-container scroll-anim">
+                    <div class="image-and-infos">
+                        <div class="episode-img-wrapper">
+                            <img src="Images/Podcast/PodcastEp2.png" alt="Une bibliothèque contenant plusieurs livres de droit" class="podcast-card-img">
+                            <span class="episode-badge">EP 2</span>
+                        </div>
+
+                        <div class="podcast-infos">
+                            <h1>Mythes et réalités des études en droit</h1>
+                            <div class="podcast-details">
+                                    <span class="podcast-text">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
+                                            <g clip-path="url(#clip0_682_1541)">
+                                                <path d="M21.6127 3.80605H18.2877V2.14355H16.6252V3.80605H9.9752V2.14355H8.3127V3.80605H4.9877C4.07332 3.80605 3.3252 4.55418 3.3252 5.46855V22.0936C3.3252 23.0079 4.07332 23.7561 4.9877 23.7561H21.6127C22.5271 23.7561 23.2752 23.0079 23.2752 22.0936V5.46855C23.2752 4.55418 22.5271 3.80605 21.6127 3.80605ZM21.6127 22.0936H4.9877V10.4561H21.6127V22.0936ZM21.6127 8.79355H4.9877V5.46855H8.3127V7.13105H9.9752V5.46855H16.6252V7.13105H18.2877V5.46855H21.6127V8.79355Z" fill="#00345C"/>
+                                            </g>
+                                            <defs>
+                                                <clipPath id="clip0_682_1541">
+                                                <rect width="26.6" height="26.6" fill="white"/>
+                                                </clipPath>
+                                            </defs>
+                                        </svg>
+                                        13 juillet 2026
+                                    </span>
+
+                                    <span class="podcast-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
+                                                <path d="M3.52441 24.4718V23.0753C3.52441 17.6764 7.90105 13.2998 13.2999 13.2998C18.6988 13.2998 23.0754 17.6764 23.0754 23.0753V24.4718" stroke="#00345C" stroke-width="1.6625" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.3 13.2999C16.385 13.2999 18.886 10.7989 18.886 7.71393C18.886 4.62885 16.385 2.12793 13.3 2.12793C10.2149 2.12793 7.71399 4.62885 7.71399 7.71393C7.71399 10.7989 10.2149 13.2999 13.3 13.2999Z" stroke="#00345C" stroke-width="1.6625" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            Alexia Vasquez Ascencio et Yasmina Bouaziz
+                                    </span>
+
+                                    <span class="podcast-text">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" fill="none">
+                                                <path d="M13.0996 24.8904C16.2265 24.8904 19.2253 23.6483 21.4364 21.4372C23.6474 19.2262 24.8896 16.2273 24.8896 13.1004C24.8896 9.97352 23.6474 6.97469 21.4364 4.76364C19.2253 2.55258 16.2265 1.31042 13.0996 1.31042C9.97267 1.31042 6.97384 2.55258 4.76278 4.76364C2.55173 6.97469 1.30957 9.97352 1.30957 13.1004C1.30957 16.2273 2.55173 19.2262 4.76278 21.4372C6.97384 23.6483 9.97267 24.8904 13.0996 24.8904Z" stroke="#00345C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M13.0996 6.60156V13.1018H18.3396" stroke="#00345C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                            25 min
+                                    </span>
+                                </div>
+                            <div class="podcast-audio">
+                                <audio id="audio2" src="PodcastEpisodes/PopuliEpisode2.mp3" preload="metadata"></audio>
+
+                                <!-- Play/Pause -->
+                                <svg class="play-btn" id="playBtn2" width="50" height="50" viewBox="0 0 50 50" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" onclick="togglePlay('audio2')">
+                                    <circle cx="24.85" cy="24.85" r="24.1" fill="#ECF6FF" stroke="#00508F" stroke-width="1.5"/>
+                                    <path class="play-icon" d="M20 17L34 25L20 33V17Z" fill="url(#grad_play)"/>
+                                    <g class="pause-icon" style="display:none">
+                                        <rect x="17" y="16" width="5" height="18" rx="1" fill="url(#grad_play)"/>
+                                        <rect x="27" y="16" width="5" height="18" rx="1" fill="url(#grad_play)"/>
+                                    </g>
+                                    <defs>
+                                        <linearGradient id="grad_play" x1="27" y1="17" x2="27" y2="33" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#00508F"/><stop offset="1" stop-color="#00345C"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+
+                                <!-- Barre de progression -->
+                                <div class="audio-line" id="progressContainer2">
+                                    <div class="audio-progress" id="progressBar2"></div>
+                                </div>
+
+                                <!-- Temps -->
+                                <span class="podcast-time">
+                                    <span id="currentTime2">0:00</span> / <span id="duration2">0:00</span>
+                                </span>
+
+                                <!-- Volume -->
+                                <div class="volume-control">
+                                    <svg id="volumeBtn2" width="31" height="27" viewBox="0 0 31 27" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="volume-btn" onclick="toggleMute('audio2')">
+
+                                        <!-- Icône son normal -->
+                                        <g class="vol-on">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.44 0.620108C15.7467 -0.980812 18.8486 0.710284 18.796 3.49606V22.8506C18.7346 25.625 15.5254 27.263 13.2472 25.682C13.1853 25.639 13.1272 25.591 13.0733 25.5386L6.16561 18.8132H3.50687C1.58249 18.8132 0 17.2199 0 15.2998V11.0023C0 9.08221 1.58249 7.48893 3.50687 7.48893H6.17594L13.2788 0.751157C13.3292 0.703449 13.383 0.659628 13.44 0.620108ZM16.0671 3.44929C16.0803 2.89193 15.5142 2.57348 15.0622 2.82132L7.65937 9.84363C7.40583 10.0841 7.06968 10.2182 6.7202 10.2182H3.50687C3.09763 10.2182 2.72927 10.5817 2.72927 11.0023V15.2998C2.72927 15.7204 3.09763 16.0839 3.50687 16.0839H6.7202C7.07581 16.0839 7.41738 16.2227 7.67217 16.4708L14.8749 23.4836C15.0894 23.598 15.3553 23.5997 15.6126 23.4683C15.895 23.3244 16.0565 23.0763 16.0667 22.8015V3.48169L16.0671 3.44929ZM25.9376 4.2515C26.7112 3.78307 27.718 4.03051 28.1866 4.80414C29.7084 7.31747 30.5296 10.1923 30.5654 13.1302V13.17C30.5296 16.1079 29.7084 18.9827 28.1866 21.496C27.718 22.2698 26.7112 22.5172 25.9376 22.0486C25.1638 21.5803 24.9165 20.5733 25.385 19.7997C26.6005 17.7921 27.2582 15.4966 27.2903 13.1501C27.2582 10.8036 26.6005 8.50806 25.385 6.50046C24.9165 5.72681 25.1638 4.71993 25.9376 4.2515ZM21.4679 8.6752C22.1649 8.09876 23.197 8.1964 23.7734 8.8933C24.7617 10.0879 25.2763 11.6029 25.2217 13.1504C25.2763 14.6979 24.7617 16.2129 23.7734 17.4075C23.197 18.1043 22.1649 18.202 21.4679 17.6256C20.771 17.0491 20.6734 16.0169 21.2498 15.32C21.7346 14.7339 21.9833 13.988 21.947 13.2283C21.9446 13.1764 21.9446 13.1244 21.947 13.0725C21.9833 12.3127 21.7346 11.5669 21.2498 10.9808C20.6734 10.2839 20.771 9.25165 21.4679 8.6752Z"
+                                                fill="url(#grad_vol_on)"/>
+                                            <defs>
+                                                <linearGradient id="grad_vol_on" x1="15.2827" y1="0" x2="15.2827" y2="26.2997" gradientUnits="userSpaceOnUse">
+                                                    <stop stop-color="#00508F"/><stop offset="1" stop-color="#00345C"/>
+                                                </linearGradient>
+                                            </defs>
+                                        </g>
+
+                                        <!-- Icône muet (haut-parleur barré) -->
+                                        <g class="vol-off" style="display:none">
+                                            <!-- Haut-parleur grisé -->
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.44 0.620108C15.7467 -0.980812 18.8486 0.710284 18.796 3.49606V22.8506C18.7346 25.625 15.5254 27.263 13.2472 25.682C13.1853 25.639 13.1272 25.591 13.0733 25.5386L6.16561 18.8132H3.50687C1.58249 18.8132 0 17.2199 0 15.2998V11.0023C0 9.08221 1.58249 7.48893 3.50687 7.48893H6.17594L13.2788 0.751157C13.3292 0.703449 13.383 0.659628 13.44 0.620108ZM16.0671 3.44929C16.0803 2.89193 15.5142 2.57348 15.0622 2.82132L7.65937 9.84363C7.40583 10.0841 7.06968 10.2182 6.7202 10.2182H3.50687C3.09763 10.2182 2.72927 10.5817 2.72927 11.0023V15.2998C2.72927 15.7204 3.09763 16.0839 3.50687 16.0839H6.7202C7.07581 16.0839 7.41738 16.2227 7.67217 16.4708L14.8749 23.4836C15.0894 23.598 15.3553 23.5997 15.6126 23.4683C15.895 23.3244 16.0565 23.0763 16.0667 22.8015V3.48169L16.0671 3.44929Z"
+                                                fill="#a0b4c4"/>
+                                            <!-- Barre diagonale colorée -->
+                                            <line x1="3" y1="24" x2="28" y2="3" stroke="url(#grad_slash)" stroke-width="2.5" stroke-linecap="round"/>
+                                            <defs>
+                                                <linearGradient id="grad_slash" x1="3" y1="24" x2="28" y2="3" gradientUnits="userSpaceOnUse">
+                                                    <stop stop-color="#00508F"/><stop offset="1" stop-color="#00345C"/>
+                                                </linearGradient>
+                                            </defs>
+                                        </g>
+                                    </svg>
+
+                                    <input type="range" id="volumeSlider2" class="volume-slider" min="0" max="1" step="0.05" value="1">
+                                </div>
+
+                                <!-- Download -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="26" viewBox="0 0 21 26"
+                                    fill="none" class="download-btn" onclick="downloadAudio('audio2')">
+                                    <path d="M21 26H0V23.4H21V26ZM13.2595 0.00634394C13.9213 0.0730729 14.4375 0.627016 14.4375 1.3V9.1H19.7285L18.1033 11.1922L11.5408 19.6422C11.2924 19.9621 10.9075 20.15 10.5 20.15C10.1435 20.15 9.80477 20.0065 9.5592 19.7565L9.45919 19.6422L2.89673 11.1922L1.27148 9.1H6.5625V1.3L6.5689 1.1667C6.63628 0.511329 7.19555 0 7.875 0H13.125L13.2595 0.00634394ZM9.1875 11.7H6.60352L10.5 16.7172L14.3965 11.7H11.8125V2.6H9.1875V11.7Z"
+                                        fill="url(#grad_dl)"/>
+                                    <defs>
+                                        <linearGradient id="grad_dl" x1="10.5" y1="0" x2="10.5" y2="26" gradientUnits="userSpaceOnUse">
+                                            <stop stop-color="#00508F"/><stop offset="1" stop-color="#00345C"/>
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 
             </div>
         </section>
