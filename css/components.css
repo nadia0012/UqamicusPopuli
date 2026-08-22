@@ -152,15 +152,15 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
 .divider { border: none; border-top: 1px solid var(--bleu-pale2); width: 100%; }
 
 .article-paragraphe h1{ font-size: 25px; }
-.article-paragraphe p{ margin: 0px; }
-.article-paragraphe { margin-bottom: 10px; }
+.article-paragraphe p{ margin: 0px; text-align:justify; }
+.article-paragraphe { margin-bottom: 10px; max-width: 700px; }
 
 .intro-article { display: flex; flex-direction: column; margin-top: -50px; gap: 20px; }
 
 .bibliographie h1{ font-size: 35px; }
-.bibliographie { background-color: var(--bleu-pale); padding: 20px; border: var(--bleu-original) 2px solid; border-radius: var(--radius-box); margin-top: 10px;}
-.bibliographie a { text-decoration: none; color: var(--bleu-original); word-break: break-all;}
-.biblio-section { margin-top: 0px; }
+.bibliographie { background-color: var(--bleu-pale); padding: 20px; border: var(--bleu-original) 2px solid; border-radius: var(--radius-box); margin-top: 10px; }
+.bibliographie a { text-decoration: none; color: var(--bleu-original); word-break: break-all; }
+.biblio-section { margin-top: 0px; max-width: 700px;}
 
 .next-prev-article  { background-color: var(--jaune-pale2); color: var(--bleu-original); width: 196px; justify-content: center; gap: 15px; }
 .next-prev-article:hover  { background-color: var(--jaune-pale1); }
