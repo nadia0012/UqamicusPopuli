@@ -62,6 +62,8 @@ Contient les styles propres à la page Équipe, Articles, Podcast et Contact (eq
     border-radius: var(--radius-box); border: var(--bleu-original) 2px solid;
 }
 
+#logo-image-article img { border: none; }
+
 .titre-balado { width: 100%; }
 
 .micro { background: var(--grad-bleu); }
